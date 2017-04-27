@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：yuanyifanchn@163.com
+	时间：2015-01-28
+	描述：模板,风格指导...alt+ctrl+F的代码格式化,风格就是这么丑.......
+-->
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				/*background-color: #efeff4;*/
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			#item_abstract {
+				font-family: "微软雅黑";
+				font-size: 14px;
+   			max-width:100%; 
+			max-height:47px; 
+			line-height:20px; 
+			text-overflow:ellipsis; 
+			overflow: hidden;
+			white-space:normal; 
+			*white-space:normal; 
+			overflow:hidden; 
+			padding-top: 5px !important;
+			}
+
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<li style="display: none;  padding-top: 5px;margin-bottom: 0px;" id="item_temp" class="mui-table-view-cell mui-media">
+			<a style="padding: 2px 0 1px 1px;margin-top: ;" id="goods_id_1" href="#">
+				<img id="item_img" style="width:100%;margin: 0px 12px 0 5px;padding-bottom: 5px;padding-top: 5px;"  class="mui-media-object mui-pull-left" src="../../img/home/home_toolbar_cion_01_off.png">
+				<div style=" margin-right: 0px;" id="item_title"  class="mui-media-body mui-ellipsis">
+					<div style="font-family: 'microsoft yahei';font-weight: 700;color: slategray;" id=''></div>
+					<div style="font-family: 'microsoft yahei';color: darkgray;" id="item_abstract" style="margin-top:2px;"></div>
+					<p id="item_describe" ></p>
+				</div>
+			</a>
+		</li>
+		<header class="mui-bar mui-bar-nav">
+			<h1 style="color: #019ffe;" class="mui-title">家装攻略</h1>
+			<span id="refresh_btn" style="float: right;" class="mui-icon mui-icon-reload"></span>
+		</header>
+			<div id="container" class="mui-content mui-scroll-wrapper">
+				<div id="mui-scroll" class="mui-scroll">	
+				<ul style="padding-top: 10px;margin-top: 0px;" id="list_container" class="mui-table-view mui-table-view-chevron">
+				</ul>
+				</div>
+			</div>
+		<script>
+			var is_first = true;
+			var cur_page = 1;
+			var page = 8;
+			var last_tap = 0;
+		
+			mui.plusReady(function() {
+				mui.init({
+					pullRefresh: {
+						container: "#container", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+//						down : {
+//	    					contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+//						    contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+//						    contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+//						   	callback : refresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+//						  		},
+						up: {
+							contentrefresh: "上拉加载更多", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: init_discover //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+			});
+			document.getElementById("refresh_btn").addEventListener("tap",refresh);
+			window.addEventListener("init_discover_event",function(e){
+				if(is_first == false){
+					return;
+				}
+				article_detail_page = mui.preload({ 
+					url: "pages/article_detail.html",
+					id: "article_detail.html",
+				}, false); 
+				plus.nativeUI.showWaiting("努力加载中...");
+				init_discover();
+			});
+			function init_discover(){
+				//console.log("discover loaddata");
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=articleList&type=json&page="+cur_page+"&r="+page, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							//alert(value)
+							
+							var article_list = data.datas;
+							if(article_list == null ){
+								mui('#container').pullRefresh().endPullupToRefresh(true);
+								return;
+							}
+							var item = document.getElementById("item_temp").cloneNode(true);
+							var list_container = document.getElementById("list_container");
+							item.setAttribute("style", "margin-bottom: 15px;");
+							for (var i = 0; i < article_list.length; i++) {
+								
+								var node = item.cloneNode(true);
+								node.firstElementChild.children[0].src = article_list[i].article_image;
+								node.firstElementChild.children[1].children[0].innerText = article_list[i].article_title;
+								node.firstElementChild.children[1].children[1].innerText = article_list[i].article_abstract;
+								list_container.appendChild(node);
+								node.addEventListener('tap', grid_item_tap(article_list[i].article_id));
+							}
+							cur_page++;
+							is_first = false;
+							mui('#container').pullRefresh().endPullupToRefresh(false);
+							
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							plus.nativeUI.closeWaiting();
+//							mui.toast("网络错误");
+//							mui('#container').pullRefresh().endPullupToRefresh(false);
+						}
+					});
+			}
+			function grid_item_tap(article_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					mui.fire(article_detail_page, 'article_init_event', {
+						'article_id': article_id
+					});
+					article_detail_page.show("slide-in-right", 300);
+				}
+			}
+			function refresh(){
+				mui("#container").pullRefresh().refresh(true);
+				cur_page = 1;
+				var list_container = document.getElementById("list_container");
+				list_container.innerHTML ="";
+				plus.nativeUI.showWaiting("正在刷新中...")
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=articleList&type=json&page="+cur_page+"&r="+page, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							//alert(value)
+							
+							var article_list = data.datas;
+							if(article_list == null ){
+								mui('#container').pullRefresh().endPullupToRefresh(true);
+								return;
+							}
+							var item = document.getElementById("item_temp").cloneNode(true);
+							var list_container = document.getElementById("list_container");
+							item.setAttribute("style", "margin-bottom: 15px;");
+							for (var i = 0; i < article_list.length; i++) {
+								
+								var node = item.cloneNode(true);
+								node.firstElementChild.children[0].src = article_list[i].article_image;
+								node.firstElementChild.children[1].children[0].innerText = article_list[i].article_title;
+								node.firstElementChild.children[1].children[1].innerText = article_list[i].article_abstract;
+								list_container.appendChild(node);
+								node.addEventListener('tap', grid_item_tap(article_list[i].article_id));
+							}
+							cur_page++;
+							is_first = false;
+							mui('#container').pullRefresh().endPullupToRefresh(false);
+							
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							plus.nativeUI.closeWaiting();
+//							mui.toast("网络错误");
+//							mui('#container').pullRefresh().endPullupToRefresh(false);
+						}
+					});
+			}
+		</script>
+	</body>
+
+</html>

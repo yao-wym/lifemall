@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/life_mall.js"></script>
+		<script type="text/javascript" src="../js/img_util.js" ></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			/*页面单独css代码*/
+			
+			.mui-table-view:before {
+				height: 0px;
+			}
+			body {
+				font-family: "微软雅黑";
+			}
+			#coupon_item{
+				margin-bottom: 10px;
+			}
+			/*.mui-table-view:after{
+height:0px;
+}*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="shop_name" class="mui-title">曲美家具美居旗舰店</h1>
+			<img id="shop_collect" class="shop-dislike mui-pull-right" style="height:85%;padding-top: 10px;" src="../img/shop/icon_life_like.png"></img>
+		</header>
+		<div id="content" class="mui-content">
+
+			<!--<a class="mui-control-item">-->
+			<img id="shop_cover" style="width: 100%;height:180px;padding:0px;" src="../img/shop/shop_default.jpg">
+			<!--</a>-->
+			<ul class="mui-table-view mui-grid-view " style="color: darkgray;background-color: #efeff4;">
+				<!--<li class="mui-table-view-cell" style="padding: 5px;">
+<span class="mui-ellipsis" style="font-size:14px;">
+<span class="mui-icon mui-icon-home-filled " style="text-align: left;font-size: 25px;color: deepskyblue;"></span> 店铺主营:曲美家具全线产品 我是 客厅 餐厅
+</span>
+</li>-->
+
+				<li class="mui-table-view-cell mui-media mui-col-xs-2" style="font-size: small;">
+					<a style="text-align: left;font-family:'微软雅黑';font-weight: 900;font-size:16px;color: gray;">
+						<span class="mui-icon mui-icon-home-filled " style="text-align: left;font-size: 25px;color: deepskyblue;"></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-10" style="padding-left: 0px;font-size: small;text-align: left;">
+					<span id="shop_summary" style="font-size:14px;" class="mui-ellipsis">
+				店铺主营:加载中...
+				</span>
+				</li>
+
+			</ul>
+
+			<!--<ul class="mui-table-view mui-grid-view" style="color: darkgray;">
+<li class="mui-table-view-cell mui-media mui-col-xs-8" style="font-size: small;">
+<a href="#" style="text-align: left;font-family:'微软雅黑';font-weight: 900;font-size:16px;color: gray;">
+曲美家具美居旗舰店
+</a>
+</li>
+<a href="#" id="collectBtn">
+<li class="mui-table-view-cell mui-media mui-col-xs-2" style="font-size: small;color: darkgray;">
+收藏:
+</li>
+<li class="mui-table-view-cell mui-media mui-col-xs-2" style="font-size: small;padding-left:0;">
+<span class="mui-icon mui-icon-star-filled" style="font-size: 25px;color: red;"></span>
+</li>
+</a>
+</ul>-->
+
+			<!--Begin F2 图片广告 -->
+			<ul class="mui-table-view  mui-grid-view">
+				<li class="mui-table-view-cell mui-media mui-col-xs-2" style="font-size: small;">
+					<a style="text-align: left;font-family:'微软雅黑';font-weight: 900;font-size:16px;color: gray;">
+						<img width="23px" src="../img/shop/icon_home_radio.jpg" class="mui-icon" style="text-align: left;font-size: 25px;color: deepskyblue;"/>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-10" style="font-size: small;text-align: left;">
+					<span id="shop_introduce" style="font-size:14px;">
+				加载中...
+				</span>
+				</li>
+
+				<li class="mui-table-view-cell mui-media mui-col-xs-2" style="font-size: small;">
+					<a  style="text-align: left;font-family:'微软雅黑';font-weight: 900;font-size:16px;color: gray;">
+						<span class="mui-icon mui-icon-phone-filled " style="text-align: left;font-size: 25px;color: deepskyblue;"></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-10" style="font-size: small;text-align: left;">
+					<a id="shop_phone" style="font-size:14px;">
+				加载中...
+				</a>
+				</li>
+
+				<li class="mui-table-view-cell mui-media mui-col-xs-2" style="font-size: small;">
+					<a style="text-align: left;font-family:'微软雅黑';font-weight: 900;font-size:16px;color: gray;">
+						<span class="mui-icon mui-icon-location-filled " style="text-align: left;font-size: 25px;color: deepskyblue;"></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-10" style="font-size: small;text-align: left;">
+					<span id="shop_address" style="font-size:14px;">
+					加载中...
+					</span>
+				</li>
+			</ul>
+			<div style="padding-top: 10px;"></div>
+			<!------------------------------------------------------------
+商品详情的3个Tab按钮
+-------------------------------------------------------------->
+			<div id="coupon_list_container">
+				
+			</div>
+			<ul style="display: none;" id="coupon_item" class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell mui-media mui-col-xs-12" style="text-align: left;">
+					<a class="mui-navigate-right"> 
+						<span style="color: orange;margin-right: 30px;">优惠券</span>
+						<span style="color: red;font-size: 16px;">满1000减50</span>
+						<span style="color: red;margin-left: 3px;">点击领取</span>
+					</a>
+				</li>
+			</ul>
+			<ul id="goods_list_container" class="mui-table-view mui-grid-view" >
+				<li class="mui-table-view-cell mui-media mui-col-xs-12" style="text-align: left;">
+					热销商品
+				</li>
+			</ul>
+			
+			
+			<div style="text-align: center; height: 40px;padding-top: 10px;" id="add_more_tab">点击加载更多</div>
+			<li id="goods_item_tpl" style="display: none;" class="mui-table-view-cell mui-media mui-col-xs-6">
+					<a>
+						<img style="height:100px;" class="mui-media-object">
+						<p class="mui-slider-title " style="font-weight:800;color:red;margin-top: 10px;margin-left: 14px;padding-right:20px;text-align: right;">$111</p>
+					</a>
+					<div class="mui-ellipsis-2" style="height: 40px;font-size: 14px;">美式家具 限量双人床 欧式双人床</div>
+				</li>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			 /*----------------  	Part 1   变量声明  	----------------TODO */
+			var page_goods_num = 6;
+			var cur_page = 1;
+			var last_tap = 0;
+			var shop_id;
+			var is_first = false;
+			var shop_name = document.getElementById("shop_name");
+			var shop_summary = document.getElementById("shop_summary");
+			var shop_introduce = document.getElementById("shop_introduce");
+			var shop_phone = document.getElementById("shop_phone");
+			var shop_address = document.getElementById("shop_address");
+			var shop_cover = document.getElementById("shop_cover");
+			var shop_collect = document.getElementById("shop_collect");
+			var goods_list_container = document.getElementById("goods_list_container");
+			var goods_item_tpl = document.getElementById("goods_item_tpl").cloneNode(true);
+			var coupon_item_tpl = document.getElementById("coupon_item").cloneNode(true);
+			var coupon_list_container = document.getElementById("coupon_list_container");
+			var add_more_tab = document.getElementById("add_more_tab");
+			goods_item_tpl.removeAttribute("style");
+			coupon_item_tpl.removeAttribute("style");
+			/*----------------  	Part 2 miu.init  	----------------TODO */
+			/*----------------  	Part 3 mui.plusReady	----------------TODO */
+			/*----------------  	Part 4 页面设置	----------------TODO */
+			function change_like_or_dislike(){
+				var shop_like_flag = "shop_like_"+shop_id;
+				if(localStorage.getItem(shop_like_flag) == 1){
+					localStorage.setItem(shop_like_flag,0);
+					shop_collect.src = "../img/shop/icon_life_like.png";
+				}else{
+					localStorage.setItem(shop_like_flag,1);
+					shop_collect.src = "../img/shop/icon_life_like_click.png";
+				}
+			}
+			/*----------------  	Part 5 事件处理	----------------TODO */
+			/*----------------  	Part 6 平台相关	----------------TODO */
+			mui.init();
+			shop_collect.addEventListener("tap",function(){
+				change_like_or_dislike();
+			});
+			window.addEventListener("init_shop",function(e){
+				//console.log("shop init shop_id "+e.detail.shop_id);
+				shop_id = e.detail.shop_id
+				shop_reload(shop_id);
+				
+			});
+			function shop_reload(shop_id){
+				var shop_like_flag = "shop_like_"+shop_id;
+				//console.log(shop_like_flag);
+				if(localStorage.getItem(shop_like_flag) == 0){
+					shop_collect.src = "../img/shop/icon_life_like.png";
+				}else{
+					shop_collect.src = "../img/shop/icon_life_like_click.png";
+				}
+				cur_page = 1;
+				coupon_list_container.innerHTML = "";
+				shop_name.innerText = "";
+				shop_summary.innerText = "加载中...";
+				shop_introduce.innerText = "加载中...";
+				shop_phone.innerText = "加载中...";
+				shop_address.innerText = "加载中...";
+				shop_address.removeAttribute("href");
+				shop_cover.src = "../img/shop/shop_default.jpg";
+				add_more_tab.innerText = "加载中...";
+				goods_list_container.innerHTML = goods_list_container.firstElementChild.outerHTML;
+				mui.ajax(
+						HOST_DIR+"index.php?act=store&op=store_detail&store_id="+shop_id ,
+						{
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(data.code != 200){
+									mui.alert(data.datas.error, '错误', function() {
+									mui.back()
+								});
+								}else{
+									//console.log(JSON.stringify(data));
+									shop_info = data.datas.store_info;
+									shop_name.innerText = shop_info.store_name;
+									if(shop_info.store_banner != null){
+										shop_cover.src = "http://www.shenghuoxi.com/nc/data/upload/shop/store/"+shop_info.store_banner
+									}
+									shop_summary.innerText = "店铺主营: "+shop_info.store_zy;
+									shop_introduce.innerText = shop_info.store_description;
+									shop_address.innerText = shop_info.live_store_address;
+									shop_phone.setAttribute("href","tel:"+shop_info.live_store_tel)
+									shop_phone.innerText = shop_info.live_store_tel; 
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.toast("网络错误");
+							}
+						});
+				load_goods_list(shop_id);
+				load_coupon_list(shop_id);
+			}
+			function grid_item_tap(goods_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					var goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+					//console.log("grid_tap goods_detail");
+					mui.fire(goods_detail_page, 'from_list_data', {
+						'goods_id': goods_id
+					});
+					goods_detail_page.show("slide-in-right", 300);
+				}
+			}
+			function coupon_item_tap(coupon) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					if(localStorage.getItem("user_id")==null){
+						mui.alert("需要登录才能领取","请登录");
+						return;
+					}
+					var btn = ["确定","取消"];
+					mui.confirm(coupon.voucher_t_desc,"代金卷领取",btn,function(status){
+						//console.log(status.index);
+					if(status.index == 0){
+						coupon_get(coupon.voucher_t_id,shop_id)
+					}
+					});
+					
+				}
+			}
+			function load_goods_list(shop_id){
+				plus.nativeUI.showWaiting("信息加载中...");
+				mui.ajax(
+						HOST_DIR+"index.php?act=store&op=goods_list&store_id="+shop_id+"&curpage="+cur_page+"&page="+page_goods_num ,
+						{
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								plus.nativeUI.closeWaiting();
+								//console.log(JSON.stringify(data));
+								if(data.code != 200){
+									mui.toast(data.datas.error);
+								}else{
+									var goods_list = data.datas.goods_list;
+									if(goods_list != null){
+										for(var i=0;i<goods_list.length;i++){
+											var goods_item = goods_item_tpl.cloneNode(true);
+											goods_item.children[1].innerText = goods_list[i].goods_name;
+											goods_item.firstElementChild.children[1].innerHTML = "￥"+goods_list[i].goods_price;
+											img_src_arr = goods_list[i].goods_image_url.split("_360");
+											img_src = img_src_arr[0] + img_src_arr[1];
+											getImageSrc(goods_item.firstElementChild.children[0],img_src);
+											goods_list_container.appendChild(goods_item);
+											goods_item.addEventListener('tap', grid_item_tap(goods_list[i].goods_id));
+										}
+									}
+									if(data.hasmore == false){
+										add_more_tab.innerHTML = "没有更多了";
+										var add_more_tab_clone = add_more_tab.cloneNode(true);
+										goods_list_container.parentElement.removeChild(add_more_tab);
+										goods_list_container.parentElement.insertBefore(add_more_tab_clone,goods_list_container.nextElementSibling);
+										//console.log("no more");
+									}else{
+										add_more_tab.innerText = "点击加载更多";
+										if(is_first == false){
+											is_first = true;
+											add_more_tab.addEventListener("tap",add_more(shop_id));
+										}
+									}
+									cur_page++;
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								mui.toast("网络错误");
+							}
+						});
+			}
+			function add_more(shop_id){
+				return function(){
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					//console.log("load more && curpage = "+cur_page);
+					load_goods_list(shop_id)
+				}
+			} 
+			function load_coupon_list(shop_id){
+				//console.log(HOST_DIR+"index.php?act=rock_pointvoucher&op=pointvoucher&page=10&store_id="+shop_id);
+				mui.ajax(
+						HOST_DIR+"index.php?act=rock_pointvoucher&op=pointvoucher&page=10&store_id="+shop_id,
+						{
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								//console.log(JSON.stringify(data));
+								if(data.code != 200){
+									return;
+								}else{
+									var coupon_list = data.datas;
+									if(coupon_list != null){
+										for(var i=0;i<coupon_list.length;i++){
+											var coupon_item = coupon_item_tpl.cloneNode(true);
+											coupon_item.firstElementChild.firstElementChild.children[1].innerText = coupon_list[i].voucher_t_desc;
+											coupon_list_container.appendChild(coupon_item);
+											coupon_item.addEventListener('tap', coupon_item_tap(coupon_list[i]));
+										}
+									}
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+							}
+						});
+			}
+			function coupon_get(vid,store_id){
+				//console.log(HOST_DIR+"index.php?act=rock_pointvoucher&op=get_voucher");
+				//console.log("vid="+vid+"&store_id="+store_id+"member_id="+localStorage.getItem("user_id"));
+				mui.ajax(
+						HOST_DIR+"index.php?act=rock_pointvoucher&op=get_voucher" ,
+						{
+							dataType: 'json', //服务器返回json格式数据
+							data:{
+								'member_id':localStorage.getItem("user_id"),
+								'vid':vid,
+								"store_id":store_id
+							},
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								//console.log(JSON.stringify(data));
+								if(data.code != 200){
+									mui.toast("获取优惠券失败");
+									return;
+								}else if(data.datas != "兑换成功"){
+									mui.toast(data.datas);
+								}else{
+									mui.toast("获取成功，请在我的优惠券中使用");
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.toast("网络错误");
+							} 
+						});
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.js"></script>
+		<script src="js/img_util.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			#slider_cotainer{
+				height: 130px;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="slider_temp" style="display: none;" class="mui-slider-item">
+			<a href="#">
+				<img>
+			</a>
+		</div>
+		<div style="display: none;" id="slider_duplicate_temp" class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/home/home_btn_set02_02.jpg">
+						</a>
+					</div>
+		<div id="indicator_temp" style="display: none;" class="mui-indicator"></div>
+		<div id="slider" class="mui-content" style="height: 120px;">
+			<!--Begin F1 轮播图-->
+			<div class="mui-slider">
+				<div id="slider_cotainer" class="mui-slider-group mui-slider-loop" style="padding-bottom: 0px;">
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/home/home_btn_set02_02.jpg">
+						</a>
+					</div>
+					 <div class="mui-slider-item"><a href="#">
+					 	<img src="img/home/home_btn_set02_02.jpg">
+					 </div>
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/home/home_btn_set02_02.jpg">
+						</a>
+					</div>
+				</div>
+				
+				<!--<div id="indicator_cotainer" class="mui-slider-indicator">
+				</div>-->
+			</div>
+			<!--End F1 轮播图-->
+
+		</div>
+		<script>
+			var last_tap = 0;
+			var goods_list_page = null;
+			var index_content_page = null;
+			mui.init();
+			//console.log("slider create");
+			 //Begin 轮播图相关
+			 //End 轮播图相关
+			 //在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
+			window.addEventListener('dragright', function(e) {
+				e.detail.gesture.preventDefault();
+			});
+
+			function function_adv_slider(data) {
+				//				alert(data)
+				var length = data.datas[0].adv_list.item.length;
+				var slider_list = document.getElementById("slider_cotainer");
+				var slider_temp = document.getElementById("slider_temp").cloneNode(true);
+//				var indicator_list = document.getElementById("indicator_cotainer");
+				var indicator_dup_temp = document.getElementById("slider_duplicate_temp").cloneNode(true)
+				slider_list.innerHTML = "";
+				indicator_dup_temp.removeAttribute("id");  
+				indicator_dup_temp.setAttribute("style",'height: 126px;');
+				//					alert(slider_temp.outerHTML)
+				slider_temp.setAttribute("style",'height: 126px;')
+				slider_temp.removeAttribute("id");
+					//					alert(length)
+				for (var i = 0; i < length; i++) {
+					var slider = slider_temp.cloneNode(true);
+//					var indicator = indicator_temp.cloneNode(true)
+					var item = data.datas[0].adv_list.item[i];
+					getImageSrc(slider.children[0].children[0] ,item.image);
+					//						alert(item.image)
+					slider.addEventListener('tap', slider_click(item,i));
+					slider_list.appendChild(slider);
+//					if (i == 0) {
+//						indicator.setAttribute("class", "mui-indicator mui-active");
+//					}
+//					indicator_list.appendChild(indicator)
+				}
+				getImageSrc(indicator_dup_temp.children[0].children[0],  data.datas[0].adv_list.item[0].image);
+				getImageSrc(document.getElementById("slider_duplicate_temp").children[0].children[0], data.datas[0].adv_list.item[length - 1].image)
+				//todo 
+//				getImageSrc(indicator_dup_temp.children[0].children[0],data.datas[0].adv_list.item[0].image)
+//				getImageSrc(document.getElementById("slider_duplicate_temp").children[0].children[0],data.datas[0].adv_list.item[length-1].image)
+				slider_list.appendChild(indicator_dup_temp)
+					//					alert(slider_list.outerHTML)
+				var slider = mui("#slider");
+				slider.slider({
+					interval: 5000
+				});
+			}
+
+			function slider_click(item,i) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					info_arr = item.data.split("goods_id=");
+					goods_id = info_arr[1];
+					//					mui.openWindow({
+					//						url: 'pages/goods_detail.html',
+					//						id: 'goods_detail',
+					//						extras: {
+					//							'goods_id': goods_id
+					//						},
+					//					});
+					mui.fire(goods_detail_page, 'from_slider_data', {
+						'goods_id': goods_id
+					});
+					//goods_list
+					goods_detail_page.addEventListener("hide", function() {
+//						index_content_page.show();
+					});
+					//var index_content = plus.webview.currentWebview();
+					//						index_content.hide();
+					goods_detail_page.show("slide-in-right", 300);
+//					index_content_page.hide();
+					//					if(item.type == 'cate_id'){
+					//						mui.openWindow({
+					//							url: 'pages/goods_list.html',
+					//							id: 'goods_detail',
+					//							extras:{'type':'cate_id','value':item.data},
+					//						});
+					//					}else if(item.type == 'keyword'){
+					//						mui.openWindow({
+					//							url: 'pages/goods_list.html',
+					//							id: 'goods_detail',
+					//							extras:{'type':'keyword','value':item.data},
+					//						});
+					//					}else{
+					//						mui.openWindow({
+					//							url: 'pages/goods_list.html',
+					//							id: 'goods_detail',
+					//							extras:{'type':'keyword','value':item.data},
+					//						});
+					//					}
+				}
+			}
+			mui.plusReady(function() {
+				goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+				index_content_page = plus.webview.getWebviewById("index_content.html");
+				mui.ajax(
+					'http://www.shenghuoxi.com/nc/mobile/index.php?act=index&type=json', {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							var data_str = JSON.stringify(data)
+							localStorage.setItem('slider_list', data_str);
+							function_adv_slider(data);
+							//				alert(data_str);   
+							//				plus.webview.getWebviewById("index_slider.html").evalJS("function_adv_slider("+data_str+")");
+							//							plus.navigator.closeSplashscreen();
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast("网络错误");
+						}
+					});
+			});
+			 //首页返回键处理
+			 //处理逻辑：1秒内，连续两次按返回键，则退出应用；
+			var first = null;
+			mui.back = function() {
+				//首次按键，提示‘再按一次退出应用’
+				if (!first) {
+					first = new Date().getTime();
+					mui.toast('再按一次退出应用');
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if (new Date().getTime() - first < 1000) {
+						plus.runtime.quit();
+					}
+				}
+			};
+		</script>
+	</body>
+
+</html>

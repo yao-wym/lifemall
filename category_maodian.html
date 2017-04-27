@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-content p {
+				color: red;
+			}
+			/*End 每个元素要有开头和结尾*/
+			/*Begin F3 图片*/
+			
+			.mui-grid-9 img {
+				max-width: 100%;
+			}
+			.mui-grid-view.mui-grid-9 {
+				background-color: white;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				color: #929292;
+			}
+			/*End F3 图片*/
+			/*九宫格不要边线*/
+			
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				border-width: 0px;
+			}
+			/*处理左面板列表项*/
+			
+			#segmentedControl .mui-control-item {
+				width: 100%;
+				font-size: smaller;
+				margin: 0;
+				padding: 0;
+			}
+			.mui-table-view:before{
+				height: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--Begin tab列表项-->
+		<header class="mui-bar mui-bar-nav">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#item1mobile">家具</a>
+				<a class="mui-control-item" href="#item2mobile">建材</a>
+			</div>
+		</header>
+		<!--End tab列表项-->
+		<div class="mui-content">
+
+
+			<ul class="mui-table-view mui-grid-view" style="margin-top: 0px;">
+				<!--Begin 左边面板-->
+				<li class="mui-table-view-cell mui-media mui-col-xs-3" style="padding: 0; top: 50px; vertical-align: top;position: fixed;">
+					<div id="segmentedControl"  class="mui-segmented-control mui-segmented-control-inverted">
+
+						<ul class="mui-table-view"> 
+							<!--<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted" >-->
+							<li   class="mui-table-view-divider">
+								<a onclick="javascript:document.getElementById('test_1').scrollIntoView()" class="mui-control-item mui-active">墙地面</a>
+							</li>
+							<!--<li class="mui-table-view-cell">-->
+							<li  class="mui-table-view-divider">
+								<a onclick="javascript:document.getElementById('test_2').scrollIntoView()" class="mui-control-item">厨房</a>
+							</li>
+							<!--<li class="mui-table-view-cell ">-->
+							<li  class="mui-table-view-divider">
+								<a onclick="javascript:document.getElementById('test_3').scrollIntoView()" class="mui-control-item">灯具照明</a>
+							</li>
+							<li class="mui-table-view-divider">
+								<a  onclick="javascript:document.getElementById('test_4').scrollIntoView()" class="mui-control-item">卫浴洁具</a>
+							</li>
+							<!--<li class="mui-table-view-cell">-->
+							<li class="mui-table-view-divider">
+								<a onclick="javascript:document.getElementById('test_5').scrollIntoView()" class="mui-control-item">五金工具</a>
+							</li>
+							</ul>
+					</div>
+				</li>
+				<!--Begin 左边面板-->
+				<!--Begin 右边面板-->
+				<li id="test_1" class="mui-active mui-control-content mui-table-view-cell mui-media mui-col-xs-9" style="margin-left: 25%;max-width: 100%;">
+
+
+
+					<!--Begin 图片广告+田字形品牌区-->
+					<ul class="mui-table-view mui-grid-view" style="">
+						<li class="mui-table-view-cell mui-media mui-col-xs-12">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/floor/list_img/q1.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/floor/list_img/q2.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/floor/list_img/q3.jpg">
+								<!--<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/floor/list_img/q4.jpg">
+								<!--<div class="mui-media-body">Color of SIP CBD</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/floor/list_img/q5.jpg">
+								<!--<div class="mui-media-body">静静看这世界</div>-->
+							</a>
+						</li>
+					</ul>
+					<!--End 图片广告+田字形品牌区-->
+					<!--Begin 九宫格选项-->
+					<ul class="mui-table-view mui-grid-view mui-grid-9">
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/floor/grid_img/bizhi.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">壁纸</div>
+
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/floor/grid_img/dizhuan.png" class="mui-icon mui-icon-home" />
+								<span class="mui-media-body">地砖</span>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/floor/grid_img/louti.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">楼梯</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/floor/grid_img/menchuang.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">门窗</div>
+							</a>
+						</li> 
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/floor/grid_img/qiangzhuan.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">墙砖</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/floor/grid_img/youqi.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">油漆</div>
+							</a>
+						</li>
+					</ul>
+					<!--End 九宫格选项-->
+
+				</li>
+				<!--Begin 右边面板-->
+				<li id="test_2" class="mui-active mui-control-content mui-table-view-cell mui-media mui-col-xs-9" style="margin-left: 25%;max-width: 100%;">
+
+
+
+					<!--Begin 图片广告+田字形品牌区-->
+					<ul class="mui-table-view mui-grid-view" style="">
+						<li class="mui-table-view-cell mui-media mui-col-xs-12">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/kitchen/list_img/q1.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/kitchen/list_img/q2.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/kitchen/list_img/q3.jpg">
+								<!--<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/kitchen/list_img/q4.jpg">
+								<!--<div class="mui-media-body">Color of SIP CBD</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/kitchen/list_img/q5.jpg">
+								<!--<div class="mui-media-body">静静看这世界</div>-->
+							</a>
+						</li>
+					</ul>
+					<!--End 图片广告+田字形品牌区-->
+					<!--Begin 九宫格选项-->
+					<ul class="mui-table-view mui-grid-view mui-grid-9">
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/kitchen/grid_img/guajian.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">挂件</div>
+
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/kitchen/grid_img/longtou.jpg" class="mui-icon mui-icon-home" />
+								<span class="mui-media-body">龙头</span>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/kitchen/grid_img/qita.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">其他</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/kitchen/grid_img/chupenshuicao.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">水槽</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/kitchen/grid_img/chugui.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">橱柜</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/kitchen/grid_img/jiaofa.png" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">角阀</div>
+							</a>
+						</li>
+					</ul>
+					<!--End 九宫格选项-->
+
+				</li><!--Begin 右边面板-->
+				<li id="test_3" class="mui-active mui-control-content mui-table-view-cell mui-media mui-col-xs-9" style="margin-left: 25%;max-width: 100%;">
+
+
+
+					<!--Begin 图片广告+田字形品牌区-->
+					<ul class="mui-table-view mui-grid-view" style="">
+						<li class="mui-table-view-cell mui-media mui-col-xs-12">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/lamp/list_img/q1.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li> 
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/lamp/list_img/q2.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a> 
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/lamp/list_img/q3.jpg">
+								<!--<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/lamp/list_img/q4.jpg">
+								<!--<div class="mui-media-body">Color of SIP CBD</div>-->
+							</a>
+						</li> 
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/lamp/list_img/q5.jpg">
+								<!--<div class="mui-media-body">静静看这世界</div>-->
+							</a>
+						</li>
+					</ul>
+					<!--End 图片广告+田字形品牌区-->
+					<!--Begin 九宫格选项-->
+					<ul class="mui-table-view mui-grid-view mui-grid-9">
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/lamp/grid_img/bideng.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">壁灯</div>
+
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/lamp/grid_img/diaodeng.jpg" class="mui-icon mui-icon-home" />
+								<span class="mui-media-body">吊灯</span>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/lamp/grid_img/luodideng.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">落地灯</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/lamp/grid_img/taideng.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">台灯</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/lamp/grid_img/xidingdeng.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">吸顶灯</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/lamp/grid_img/zhaoming.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">照明</div>
+							</a>
+						</li>
+					</ul>
+					<!--End 九宫格选项-->
+
+				</li><!--Begin 右边面板-->
+				<li id="test_4" class="mui-active mui-control-content mui-table-view-cell mui-media mui-col-xs-9" style="margin-left: 25%;max-width: 100%;">
+
+
+
+					<!--Begin 图片广告+田字形品牌区-->
+					<ul class="mui-table-view mui-grid-view" style="">
+						<li class="mui-table-view-cell mui-media mui-col-xs-12">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/bathroom/list_img/q1.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/bathroom/list_img/q2.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/bathroom/list_img/q3.jpg">
+								<!--<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/bathroom/list_img/q4.jpg">
+								<!--<div class="mui-media-body">Color of SIP CBD</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/bathroom/list_img/q5.jpg">
+								<!--<div class="mui-media-body">静静看这世界</div>-->
+							</a>
+						</li>
+					</ul>
+					<!--End 图片广告+田字形品牌区-->
+					<!--Begin 九宫格选项-->
+					<ul class="mui-table-view mui-grid-view mui-grid-9">
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/bathroom/grid_img/huasa.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">花洒</div>
+
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/bathroom/grid_img/linyufang.jpg" class="mui-icon mui-icon-home" />
+								<span class="mui-media-body">淋浴房</span>
+							</a>
+						</li> 
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/bathroom/grid_img/matong.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">马桶</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/bathroom/grid_img/guajian.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">挂件</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/bathroom/grid_img/yuba.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">浴霸</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/bathroom/grid_img/yugang.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">浴缸</div>
+							</a>
+						</li>
+					</ul>
+					<!--End 九宫格选项-->
+
+				</li><!--Begin 右边面板-->
+				<li id="test_5" class="mui-active mui-control-content mui-table-view-cell mui-media mui-col-xs-9" style="margin-left: 25%;max-width: 100%;">
+
+
+
+					<!--Begin 图片广告+田字形品牌区-->
+					<ul class="mui-table-view mui-grid-view" style="">
+						<li class="mui-table-view-cell mui-media mui-col-xs-12">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/tools/list_img/q1.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/tools/list_img/q2.jpg">
+								<!--<div class="mui-media-body">幸福就是可以一起睡觉</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/tools/list_img/q3.jpg">
+								<!--<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>-->
+							</a> 
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/tools/list_img/q4.jpg">
+								<!--<div class="mui-media-body">Color of SIP CBD</div>-->
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object" src="./img/category/tools/list_img/q5.jpg">
+								<!--<div class="mui-media-body">静静看这世界</div>-->
+							</a>
+						</li>
+					</ul> 
+					<!--End 图片广告+田字形品牌区-->
+					<!--Begin 九宫格选项-->
+					<ul class="mui-table-view mui-grid-view mui-grid-9">
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/tools/grid_img/gongju.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">工具</div>
+
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/tools/grid_img/guandao.jpg" class="mui-icon mui-icon-home" />
+								<span class="mui-media-body">管道</span>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/tools/grid_img/kaiguanchazuo.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">开关插座</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/tools/grid_img/lashou.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">拉手</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/tools/grid_img/menxiheye.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">门吸合页</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-4">
+							<a href="#">
+								<img src="./img/category/tools/grid_img/suoju.jpg" class="mui-icon mui-icon-home" />
+								<div class="mui-media-body">锁具</div>
+							</a>
+						</li>
+					</ul>
+					<!--End 九宫格选项-->
+
+				</li>
+				<!--Begin 右边面板-->
+			</ul>
+
+		</div>
+		<script>
+			mui.init();
+
+
+			 //首页返回键处理
+			 //处理逻辑：1秒内，连续两次按返回键，则退出应用；
+			var first = null;
+			mui.back = function() {
+				//首次按键，提示‘再按一次退出应用’
+				if (!first) {
+					first = new Date().getTime();
+					mui.toast('再按一次退出应用');
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if (new Date().getTime() - first < 1000) {
+						plus.runtime.quit();
+					}
+				}
+
+			};
+		</script>
+	</body>
+
+</html>

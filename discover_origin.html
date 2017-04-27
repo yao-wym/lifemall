@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：yuanyifanchn@163.com
+	时间：2015-01-28
+	描述：模板,风格指导...alt+ctrl+F的代码格式化,风格就是这么丑.......
+-->
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				/*background-color: #efeff4;*/
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-content p {
+				color: red;
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">装修风格汇</h1>
+		</header>
+			<div id="container" class="mui-control-content mui-content mui-active mui-scroll">
+					<ul id="list_container" class="mui-table-view mui-table-view-chevron">
+					</ul>
+			</div>
+		<div id="item_temp" class="mui-card" style="margin-bottom: 15px;display: none;">
+				<a id="article_01" href="#">
+					<img style="max-width: 100%;height: 200px" src="img/article/article_01_01.jpg">
+					<p class="mui-slider-title" style="position: inherit;margin-top:-35px;color: lightgray;">
+						会呼吸的两居室小户型装修
+					</p>
+				</a>
+			</div>
+		<script>
+			var is_first = true;
+			var cur_page = 1;
+			var page = 4;
+			var last_tap = 0;
+			mui.init();
+		
+			mui.plusReady(function() {
+				mui.init({
+					pullRefresh: {
+						container: "#container", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						//  					down : {
+						//    					contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						//    					contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						//    					contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						//    					callback : refresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						//  					},
+						up: {
+							contentrefresh: "上拉加载更多", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: init_discover //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+			});
+
+			window.addEventListener("init_discover_event",function(e){
+				if(is_first == false){
+					return;
+				}
+				article_detail_page = mui.preload({ 
+					url: "pages/article_detail.html",
+					id: "article_detail.html",
+				}, false); 
+				plus.nativeUI.showWaiting("努力加载中...");
+				init_discover();
+			});
+			function init_discover(){
+				//console.log("discover loaddata");
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=articleList&type=json&page="+cur_page+"&r="+page, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							//alert(value)
+							
+							var article_list = data.datas;
+							if(article_list == null ){
+								mui('#container').pullRefresh().endPullupToRefresh(true);
+								return;
+							}
+							var item = document.getElementById("item_temp").cloneNode(true);
+							var list_container = document.getElementById("list_container");
+							item.setAttribute("style", "margin-bottom: 15px;");
+							for (var i = 0; i < article_list.length; i++) {
+								
+								var node = item.cloneNode(true);
+								node.firstElementChild.children[0].src = article_list[i].article_image;
+								node.firstElementChild.children[1].innerText = article_list[i].article_title_short;
+								list_container.appendChild(node);
+								node.addEventListener('tap', grid_item_tap(article_list[i].article_id));
+							}
+							cur_page++;
+							is_first = false;
+							mui('#container').pullRefresh().endPullupToRefresh(false);
+							
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							plus.nativeUI.closeWaiting();
+//							mui.toast("网络错误");
+//							mui('#container').pullRefresh().endPullupToRefresh(false);
+						}
+					});
+			}
+			function grid_item_tap(article_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					mui.fire(article_detail_page, 'article_init_event', {
+						'article_id': article_id
+					});
+					article_detail_page.show("slide-in-right", 300);
+				}
+			}
+		</script>
+	</body>
+
+</html>

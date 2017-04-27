@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/app.js"></script>
+		<!--<link href="css/life_index.css" rel="stylesheet" />-->
+		<style type="text/css">
+			/*Begin F3 图片*/
+			
+			.mui-grid-9 img {
+				max-width: 100%;
+			}
+			.mui-grid-view.mui-grid-9 {
+				background-color: white;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				color: #929292;
+			}
+			.mui-table-view:after{
+				height: 0px;
+			}
+			/*End F3 图片*/
+		</style>
+		<!--<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>-->
+	</head>
+
+	<body>
+
+		<div id="content" class="mui-content">
+			
+			<div style="padding-top: 130px ;"></div>
+			<!--Begin F1 导航按钮-->
+			<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding-top: 0px;">
+				<li id="well_store" class="mui-table-view-cell mui-media mui-col-xs-4" style="padding: 0px;text-align: center;">
+					<a id="f3_btn_01" href="#">
+						<img src="img/index/index_store.png" style="width: 15px; float: left;margin-left: 8px;" class="mui-media-body"/>
+						<div style="float: left; width: 70%;margin-left: 0px;" class="mui-media-body">优质商家</div>
+					</a>
+				</li>
+				<li id="hot_goods" class="mui-table-view-cell mui-media mui-col-xs-4"style="padding: 0px;">
+					<a href="#">
+						<img src="img/index/index_shopping.png" style="width: 15px; float: left;margin-left: 8px;" class="mui-media-body"/>
+						<div style="float: left; width: 70%;margin-left: 0px;" class="mui-media-body">热门商品</div>
+					</a>
+				</li>	
+				<li id="command_coupon" class="mui-table-view-cell mui-media mui-col-xs-4"style="padding: 0px;">
+					<a href="#" >
+						<img src="img/index/index_command.png" style="width: 15px; float: left;margin-left: 8px;" class="mui-media-body"/>
+						<div style="float: left; width: 70%;margin-left: 0px;" class="mui-media-body">优惠促销</div>
+					</a>
+				</li>
+			</ul>
+			<!--End F1 导航按钮 -->
+			<!--Begin F2 图片广告 -->
+			<ul class="mui-table-view mui-grid-view">
+				<li class="mui-table-view-cell mui-media mui-col-xs-5">
+					<a id="f2_btn_01" href="#">
+						<img class="mui-media-object" src="img/home/home_btn_set02_01.jpg">
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-7">
+					<ul class="mui-table-view mui-grid-view">
+						<li class="mui-table-view-cell mui-media mui-col-xs-12">
+							<a id="f2_btn_02" href="#">
+								<img class="mui-media-object" src="img/home/home_btn_set02_02.jpg">
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a id="f2_btn_03" href="#">
+								<img class="mui-media-object" src="img/home/home_btn_set02_03.jpg"> </a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a id="f2_btn_04" href="#">
+								<img class="mui-media-object" src="img/home/shigongdui.jpg"> </a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<!--End F2 图片广告 -->
+			<div style="height: 10px;"></div>
+			<!--Begin F3 9宫格分类 -->
+			<ul id="bottom_grid" class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a id="f3_btn_01" href="#">
+						<img src="img/index/1.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">客厅家具</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/2.jpg" class="mui-icon mui-icon-home" />
+						<span class="mui-media-body">卧室家具</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/3.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">餐厅家具</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/4.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">厨房用品</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/5.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">家纺家饰</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/6.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">卫浴洁具</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/7.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">灯具照明</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/8.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">地面墙面</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="#">
+						<img src="img/index/9.jpg" class="mui-icon mui-icon-home" />
+						<div class="mui-media-body">五金水暖</div>
+					</a>
+				</li>
+			</ul>
+			<!--End F3 9宫格分类 -->
+
+		</div>
+		<script>
+			 /*----------------  	Part 1   	变量声明  		----------------TODO */
+			var index_content_page = null;
+			var index_page = null;
+			var goods_list_page = null;
+			var goods_detail_page = null;
+			var vip_shop_list_page = null;
+			var coupon_shop_list_page = null;
+			var hot_goods_list_page = null;
+			var mall_01_page = null;
+			var mall_02_page = null;
+			var slider_page = null;
+			var shop_list_page = null
+			 //			var from_index_content = true;
+			var discover_page = null;
+			var is_first = true; 
+			/*----------------  	Part 2 		miu.init  		----------------TODO */
+			mui.init();
+			/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+			mui.plusReady(function() {
+				index_content_page = plus.webview.getWebviewById("index_content.html");
+				index_page = plus.webview.getWebviewById("index.html");
+				goods_list_page = plus.webview.getWebviewById("goods_list.html");
+				goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+				discover_page = plus.webview.getWebviewById("discover.html");
+				mall_01_page = plus.webview.getWebviewById("mall_01_page.html");
+				mall_02_page = plus.webview.getWebviewById("mall_02_page.html");
+//				init_mall();
+				initBottomGrid();
+				init_slider(); 
+				plus.navigator.closeSplashscreen();
+//				bind_jump_action();
+				
+				//console.log("init jump action");
+				//--- 轮播图显示处理
+				slider_page.addEventListener('loaded', function() {
+					if (is_first) {
+						//console.log('loaded  index_slider');
+						slider_page.show();
+						is_first = false;
+					}
+				}, false);
+				index_content_page.addEventListener("loaded",function(){
+					if(mall_01_page == null && mall_02_page == null){
+						init_mall();
+					}
+				});
+					shop_list_page = mui.preload({
+					url: "pages/shop_list.html",
+					id: "shop_list.html",
+				}, false); 
+				coupon_shop_list_page = mui.preload({
+					url: 'pages/coupon_shop_list.html',
+					id: 'coupon_shop_list.html', 
+				}, false); 
+				hot_goods_list_page = mui.preload({
+					url: 'pages/hot_goods_list.html',
+					id: 'hot_goods_list.html', 
+				}, false); 
+				vip_shop_list_page = mui.preload({
+					url: 'pages/vip_shop_list.html',
+					id: 'vip_shop_list.html', 
+				}, false); 
+
+				
+			});
+			/*----------------  	Part 4 		页面设置			----------------TODO */
+			/*
+			 * 九宫格初始化
+			 * from:wym
+			 */
+			function initBottomGrid() {
+				var keyword = new Array(1173, 1172, 1174, 1128, 1179, 1114, 1112, 1116, 1115);
+				var slider_list = document.getElementById("bottom_grid").children;
+				for (var i = 0; i < 9; i++) {
+					var nodes = slider_list[i].children[0].children;
+					var item = keyword[i];
+					slider_list[i].addEventListener('tap', grid_item_tap(item));
+				}
+			};
+			/*
+			 * 九宫格赋值
+			 * from:wym
+			 */
+			function grid_item_tap(item) {
+				return function() {
+					//alert(item)
+					mui.fire(goods_list_page, 'set_list_data', {
+						'type': 'gc_id',
+						'value': item
+					});
+					goods_list_page.show("slide-in-right", 300);
+				}
+			};
+			/*
+			 * 轮播图初始化
+			 * from:yyf
+			 */
+			function init_slider() {
+				slider_page = mui.preload({
+					url: "index_slider.html",
+					id: "index_slider.html",
+					styles: {
+						top: '0', 
+						height: '130px'
+					}
+				}, false); 
+				index_content_page.append(slider_page);
+				
+			};
+			/*
+			 * mall页面初始化
+			 * from:yyf
+			 */
+			function init_mall() {
+				
+//				mall_01_page = plus.webview.getWebviewById("mall_01_page.html");
+//				mall_02_page = plus.webview.getWebviewById("mall_02_page.html");
+				
+			};
+			/*
+			 * 跳转绑定
+			 * from:yyf
+			 */
+			function bind_jump_action() {
+				//console.log("init jump action");
+
+				//--- 轮播图显示处理
+				slider_page.addEventListener('loaded', function() {
+					if (is_first) {
+						//console.log('loaded  index_slider');
+						slider_page.show();
+						is_first = false;
+					}
+				}, false);
+				index_content_page.addEventListener("loaded",function(){
+					if(mall_01_page == null && mall_02_page == null){
+						init_mall();
+					}
+				});
+
+			};
+			
+			
+			/*----------------  	Part 5 		事件处理			----------------TODO */
+			window.addEventListener('dragright', function(e) {
+				e.detail.gesture.preventDefault();
+			});
+			/*
+			 * mall_01页面跳转
+			 * from:yyf
+			 */
+			document.getElementById('f2_btn_01').addEventListener('tap', function() {
+				//console.log("f2_btn_01 tap");
+				mui.fire(mall_01_page, 'mall_01_init');
+				mall_01_page.show("slide-in-right", 300);
+				
+//				index_content_page.hide();
+			});
+			/*
+			 * mall_02页面跳转
+			 * from:yyf
+			 */
+			document.getElementById('f2_btn_02').addEventListener('tap', function() {
+				//console.log("f2_btn_02 tap");
+				mui.fire(mall_02_page, 'mall_02_init');
+				mall_02_page.show("slide-in-right", 300);
+//				index_content_page.hide();
+			});
+			/*
+			 * 品牌汇跳转 - 商品列表
+			 * from:yyf
+			 */
+			document.getElementById('f2_btn_03').addEventListener('tap', function() {
+				//console.log("f2_btn_03 tap");
+				mui.fire(goods_list_page, 'set_list_data', {
+					'type': 'gc_id',
+					'value': 1241
+				});
+				goods_list_page.show("slide-in-right", 300);
+//				index_content_page.hide();
+			});
+			document.getElementById('f2_btn_04').addEventListener('tap', function() {
+				if(shop_list_page == null){
+					shop_list_page = mui.preload({
+					url: "pages/shop_list.html",
+					id: "shop_list.html",
+				}, false); 
+				}
+				//console.log("shoplist_init");
+				mui.fire(shop_list_page, 'shoplist_init');
+				shop_list_page.show("slide-in-right", 300);
+//				discover_page.show();
+//				index_content_page.hide();
+//				plus.webview.show("discover.html");
+//				plus.webview.show("index_content.html");
+//				mui.fire(plus.webview.getWebviewById(plus.runtime.appid), 'change_activeTab');
+//				//console.log("f2_btn_04   :"+plus.webview.getWebviewById(plus.runtime.appid).activeTab);
+			});
+			/*
+			 * 优质商家跳转
+			 * from:wym
+			 */
+			document.getElementById('well_store').addEventListener('tap', function() {
+				//console.log("command_coupon tap");
+				if(vip_shop_list_page == null){
+					vip_shop_list_page = mui.preload({
+					url: 'pages/vip_shop_list.html',
+					id: 'vip_shop_list.html', 
+				}, false); 
+				} 
+				mui.fire(vip_shop_list_page, 'vip_shop_list_init');
+				vip_shop_list_page.show("slide-in-right", 300);
+						
+			});
+			/*
+			 * 热门商品跳转
+			 * from:wym
+			 */
+			document.getElementById('hot_goods').addEventListener('tap', function() {
+				//console.log("hot_goods tap");
+				if(hot_goods_list_page == null){
+					hot_goods_list_page = mui.preload({
+					url: 'pages/hot_goods_list.html',
+					id: 'hot_goods_list.html', 
+				}, false); 
+				} 
+				mui.fire(hot_goods_list_page, 'hot_goods_list_init');
+				hot_goods_list_page.show("slide-in-right", 300);
+			});
+			/*
+			 * 优惠促销跳转
+			 * from:wym
+			 */
+			document.getElementById('command_coupon').addEventListener('tap', function() {
+				//console.log("coupon_shop_list tap");
+				if(coupon_shop_list_page == null){
+					coupon_shop_list_page = mui.preload({
+					url: 'pages/coupon_shop_list.html',
+					id: 'coupon_shop_list.html', 
+				}, false); 
+				} 
+				mui.fire(coupon_shop_list_page, 'coupon_shop_list_init');
+				coupon_shop_list_page.show("slide-in-right", 300);
+			});
+			/*----------------  	Part 6 		平台相关			----------------TODO */
+			 //在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
+		</script>
+	</body>
+
+</html>

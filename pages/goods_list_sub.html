@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.js"></script>
+		<link href="../css/mui.css" rel="stylesheet" />
+		<style type="text/css">
+			/*Begin 处理顶部导航条搜索bar布局混乱*/
+			
+			/*.mui-search:before {
+				top: 65%;
+			}
+			.mui-input-row.mui-search .mui-icon-clear {
+				top: 0px;
+				right: 5px;
+			}*/
+			/*End 处理导航条布局混乱*/
+			/*Begin tab的字体颜色*/
+			
+			.mui-segmented-control {
+				color: darkgray;
+			}
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			#icon_container div{
+				margin-top: 12px;
+				margin-left: 40px;
+				color: #019ffe;
+			}
+			#icon_container{
+				padding-top: 0px !important;
+				padding-bottom: 20px !important; 
+				margin-left: 72%;
+				width: 100px;
+				height: 50px;
+			}
+			#filter {
+  				display: table-cell;
+  				width: 1%;
+  				overflow: hidden;
+  				line-height: 38px;
+ 				color: #007aff;
+ 				text-align: center;
+ 				text-overflow: ellipsis;
+  				white-space: nowrap;
+  				border-color: #007aff;
+  				border-left: 1px solid #007aff;
+  				-webkit-transition: background-color .1s linear;
+          		transition: background-color .1s linear;
+			}
+			/*End 列表图片大小*/
+		</style>
+	</head>
+
+	<body>
+		<!--Begin 搜索+返回,顶部导航-->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div class="mui-input-row mui-search" style="margin-top:-42px;margin-left: 36px;float: left;">
+				<input id="search" type="search" class=" mui-input-clear" placeholder="请输入您想搜索的商品" />
+			</div>
+			<div id="icon_container" style="">
+				<div id="search_btn" style="position: absolute; margin-bottom: 20px;padding-left: 10px;">搜索</div>
+			</div>
+		</header>
+		<!--End 搜索+返回,顶部导航-->
+		<!--Begin tab列表项--> 
+		<header class="mui-bar mui-bar-nav" style="top:44px;">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" id="goods_list/goods_list_sub_1.html" href="goods_list/goods_list_sub_1.html">综合</a>
+				<a class="mui-control-item" id="goods_list/goods_list_sub_2.html" href="goods_list/goods_list_sub_2.html">收藏</a>
+				<a class="mui-control-item" id="goods_list/goods_list_sub_3.html" href="goods_list/goods_list_sub_3.html">价格</a>
+				<a class="mui-control-item" id="goods_list/goods_list_sub_4.html" href="#myPopover">热门</a>
+				<!--<a id="filter" href="#myPopover">热门</a>-->
+			</div>
+			
+		</header>
+    		<li id="pop_li" style="display: none;" class="mui-table-view-cell"></li>
+	<div id="myPopover" class="mui-popover">
+ 		<ul class="mui-table-view"> 
+  		</ul>
+	</div>
+
+		<script type="text/javascript" charset="utf-8">
+			var activeTab = null;
+			var type = null;
+			var value = null;
+			var PAGE_NUM = 6;
+			var ORDER_SALES = 1;
+			var ORDER_REVIEW = 2;
+			var ORDER_PRICE = 3;
+			var ORDER_NEW = "";
+			var subpage_style_with_header = {
+				top: '96px',
+				bottom: '0px'
+			};
+			var subpages = ['goods_list/goods_list_sub_1.html', 'goods_list/goods_list_sub_2.html', 'goods_list/goods_list_sub_3.html', 'goods_list/goods_list_sub_4.html'];
+			var list_type, list_value;
+			var goods_list_page = null;
+			var index_content_page = null;
+			var search_input = document.getElementById("search");
+			mui.plusReady(function() {
+				goods_list_page = plus.webview.getWebviewById("goods_list.html");
+				index_content_page = plus.webview.getWebviewById("index_content.html");
+				init_sub_views();
+				
+				 mui('.mui-segmented-control').on('click', 'a', function(e) {
+				 	//console.log("goods_list mui-segmented-control:debug");
+                    e.preventDefault();
+                });
+				search_input.addEventListener('keyup', function(e) {
+						if (e.keyCode == 13) {
+							var value_uri = encodeURI(search_input.value);
+							type = "keyword";
+							value = value_uri;
+							var sub = plus.webview.getWebviewById(subpages[0])
+							var js_code = "reload_data('"+type+"','" + value + "')";
+							sub.evalJS(js_code);
+							refresh_list();
+						//					init_sub_views();
+					}
+				});
+				var search_btn = document.getElementById("icon_container");
+				search_btn.addEventListener('tap', function(e) {
+					var value_uri = encodeURI(search_input.value);
+					type = "keyword";
+					value = value_uri;
+					var sub = plus.webview.getWebviewById(subpages[0])
+					var js_code = "reload_data('"+type+"','" + value + "')";
+					sub.evalJS(js_code);
+					refresh_list();
+					//四个同时加载
+//							for (var i = 0; i < 4; i++) {
+//								var sub = plus.webview.getWebviewById(subpages[i])
+//								var js_code = "reload_data('"+type+"','" + value + "')";
+//								sub.evalJS(js_code);
+//					}
+				});
+				if (plus.webview.currentWebview().type == "keyword") {
+					search_input.focus()
+					search_input.value = plus.webview.currentWebview().value;
+				}
+			});
+
+			function init_sub_views() {
+				var self = plus.webview.currentWebview();
+				for (var i = 0; i < 4; i++) {
+					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style_with_header);
+					if (i > 0) {
+						sub.hide();
+					}
+					self.append(sub);
+				}
+				if (mui.os.android) {
+					plus.screen.lockOrientation("portrait-primary");
+				}
+				activeTab = subpages[0];
+				//			var title = document.getElementById("title");
+				//选项卡点击事件
+				document.getElementById('segmentedControl').addEventListener('tap', function(e) {
+					var targetTab = e.target.getAttribute('href');
+					if(targetTab=="#myPopover"){
+						return true;
+					}
+					if (targetTab == activeTab) {
+						if(targetTab == subpages[2]){
+							var sub = plus.webview.getWebviewById(activeTab)
+							var js_code = "reload_data('"+type+"','" + value + "')";
+							sub.evalJS(js_code);
+							init_array[activeTab] = 1;
+						}
+						return;
+					} 
+					plus.webview.show(targetTab);
+					//隐藏当前;
+					plus.webview.hide(activeTab);
+					//更改当前活跃的选项卡
+					activeTab = targetTab;
+					//todo 2015-4-2 只在当前activetab下请求数据。
+					if(init_array[activeTab] == 0){
+						var sub = plus.webview.getWebviewById(activeTab)
+						var js_code = "reload_data('"+type+"','" + value + "')";
+						sub.evalJS(js_code);
+						init_array[activeTab] = 1;
+					}
+				});
+			}
+			window.addEventListener("set_list_data", function(e) {
+				plus.webview.currentWebview().type = e.detail.type;
+				plus.webview.currentWebview().value = e.detail.value;
+				//console.log((plus.webview.currentWebview().type+"@@@@@@@@@@@" + plus.webview.currentWebview().value));
+				//				nwaiting.close(); 
+				if(e.detail.type == "keyword"){
+					search_input.value = decodeURI(e.detail.value);
+					search_input.focus()
+				}else{
+					get_filter_list();
+					search_input.value = "";
+				}
+				//初始化四个子view
+//				for (var i = 0; i < 4; i++) {
+//					var sub = plus.webview.getWebviewById(subpages[i])
+//					var js_code = "reload_data('"+e.detail.type+"','" + e.detail.value + "')";
+//					sub.evalJS(js_code);
+//				}
+				// 只初始化第一个子webview
+				var sub = plus.webview.getWebviewById(subpages[0])
+				type = e.detail.type;
+				value = e.detail.value;
+				var js_code = "reload_data('"+type+"','" + value + "')";
+				sub.evalJS(js_code);
+				//标记第一个
+				refresh_list();
+			});
+			 //			goods_list_page.addEventListener("hide",function(){
+			 //				//console.log("hide list");
+			 //				index_content_page.show();
+			 //			},false);
+			 function refresh_list(){
+			 	init_array = {
+							'goods_list/goods_list_sub_1.html':0,
+							'goods_list/goods_list_sub_2.html':0, 
+							'goods_list/goods_list_sub_3.html':0, 
+							'goods_list/goods_list_sub_4.html':0
+				}
+				init_array[subpages[0]] = 1;
+					//隐藏当前;
+					if(activeTab != null){
+						plus.webview.hide(activeTab);
+						var activeTab_div = document.getElementById(activeTab);
+						var firstTab_div = document.getElementById('goods_list/goods_list_sub_1.html');
+						activeTab_div.setAttribute("class","mui-control-item");
+						firstTab_div.setAttribute("class","mui-control-item mui-active");
+						plus.webview.show('goods_list/goods_list_sub_1.html');
+					}
+				
+				
+			 }
+			 function get_filter_list(){
+			 	var pop_li = document.getElementById("pop_li").cloneNode(true);
+			 	pop_li.removeAttribute("style");
+			 	var pop_ul = document.getElementById("myPopover").firstElementChild;
+			 	mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?op=index&act=goods_class&gc_id="+value, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							var class_list = data.datas.class_list;
+							for(var i=0;i<class_list.length;i++){
+								var node = pop_li.cloneNode(true);
+								node.innerText = class_list[i].gc_name;
+								node.nodeValue = class_list[i].gc_id;
+								pop_ul.appendChild(node);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+						}
+					});
+			 }
+		</script>
+	</body>
+
+</html>

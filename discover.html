@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：yuanyifanchn@163.com
+	时间：2015-01-28
+	描述：模板,风格指导...alt+ctrl+F的代码格式化,风格就是这么丑.......
+-->
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/life_mall.js"></script>
+		<script src="js/img_util.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/wym.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+				top: 25px;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			#item_abstract {
+				font-family: "微软雅黑";
+				font-size: 14px;
+   			max-width:100%; 
+			max-height:47px; 
+			line-height:20px; 
+			text-overflow:ellipsis; 
+			overflow: hidden;
+			white-space:normal; 
+			*white-space:normal; 
+			padding-top: 5px !important;
+			display: -webkit-box;
+			-webkit-line-clamp:2;
+			-webkit-box-orient:vertical
+			}
+			#item_title{
+   			max-width:100%; 
+			max-height:24px; 
+			line-height:20px; 
+			text-overflow:ellipsis; 
+			overflow: hidden;
+			display: -webkit-box;
+			word-wrap:break-word;
+			white-space:normal !important; 
+			*white-space:normal !important; 
+			padding-top: 5px !important;
+			-webkit-line-clamp:1;
+			-webkit-box-orient:vertical
+			}
+			.mui-table-view-divider{
+				padding-left: 0px;
+			}
+			.mui-media-body{
+				color: gray !important;
+				font-family: "microsoft yahei";
+			}
+			.mui-table-view-cell:after{
+				height: 0px;
+			}
+			.mui-table-view-cell li{
+				height: 70px;
+			}
+			.add_more_tab{
+				width: 100%; 
+				text-align: center; 
+				padding-top: 10px; 
+				height: 40px;
+				background-color: #efeff4;
+			}
+			#post_img_list img{
+				width: 23%;
+				height: 70px;
+			}
+			#xinde_danghang a{
+				height:100%;
+				text-align:center;
+				width: 100%;
+				margin: 0px 0px;
+				padding-top: 6px;
+			}
+			#xinde_danghang div{
+				color: gray;
+				font-size: 12px;
+				text-align: center;
+			}
+			#xinde_danghang img{
+				width: 50%;
+				max-width: 40px;
+			}
+			#xinde_danghang li{
+				text-align:center;
+				padding: 0px;
+			}
+			
+			#tuku_danghang a{
+				height:100%;
+				text-align:center;
+				width: 100%;
+				margin: 0px 0px;
+				padding-top: 6px;
+			}
+			#tuku_danghang div{
+				color: gray;
+				font-size: 12px;
+				text-align: center;
+			}
+			#tuku_danghang img{
+				width: 70%;
+				max-width: 100px;
+			}
+			#tuku_danghang li{
+				text-align:center;
+				padding: 0px;
+			}
+			#xinde_danghang_container{
+				overflow: scroll;
+				width: 20%;
+				padding: 0;
+				list-style:none;  
+				vertical-align: top;
+				float: left;
+				height:400px;
+			}
+			#tuku_danghang_container{
+				overflow: scroll;
+				width: 20%;
+				padding: 0;
+				list-style:none;  
+				vertical-align: top;
+				float: left;
+				height:400px;
+			}
+			#tuku_container{
+				background-color: white;
+				margin-left: 20%;
+				width: 80%;
+				overflow: scroll;
+			}
+			#xinde_container{
+				background-color: white;
+				margin-left: 20%;
+				width: 80%;
+				overflow: scroll;
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+	<body class="mui-fullscreen">
+		<li style="display: none;  padding-top: 5px;margin-bottom: 0px;" id="item_temp" class="mui-table-view-cell mui-media">
+			<a style="padding: 2px 0 1px 1px;margin-top: ;" id="goods_id_1" href="#">
+				<img id="item_img" style="width:100%;margin: 0px 12px 0 5px;padding-bottom: 5px;padding-top: 5px;"  class="mui-media-object mui-pull-left">
+				<div style=" margin-right: 0px;"  class="mui-media-body mui-ellipsis">
+					<div style="font-family: 'microsoft yahei';font-weight: 700;color: slategray;" id='item_title'></div>
+					<div style="font-family: 'microsoft yahei';color: darkgray;" id="item_abstract" style="margin-top:2px;"></div>
+					<p id="item_describe" ></p>
+				</div>
+			</a>
+		</li>
+		<header class="mui-bar mui-bar-nav">
+			<div id="segmentedControl_tab" class="mui-segmented-control" style="width: 40%;margin-top: 3px;">
+			<a class="mui-control-item mui-active" name="tab_xinde" style="line-height: 25px !important;font-size: 10px;">
+				心得
+			</a>
+			<a class="mui-control-item" name="tab_tuku" style="line-height: 25px !important;font-size: 10px;">
+				图库
+			</a> 
+		</div>
+		</header>
+		<li style="display: none;font-weight: bold; color: gray;" class="class="mui-table-view-cell mui-media"">
+					图库的内容~~~~~~~
+				<div id="goods_pic_group_2" class="img_show_sub" class="mui-segmented-control mui-segmented-control-inverted">
+			<a  style="display: ;" id="goods_pic_temp_2" class="mui-control-item" href="#goods_pic_1">
+				<img src="img/article/article_02_02.jpg" style="max-height:50px;max-width: 100%;padding:0 px;" >
+			</a>
+			<a  style="display: ;" id="goods_pic_temp_2" class="mui-control-item" href="#goods_pic_1">
+				<img src="img/article/article_02_02.jpg" style="max-height:50px;max-width: 100%;padding:0 px;" >
+			</a>
+			<a  style="display: ;" id="goods_pic_temp_2" class="mui-control-item" href="#goods_pic_1">
+				<img src="img/article/article_02_02.jpg" style="max-height:50px;max-width: 100%;padding:0px;" >
+			</a>
+		</div>
+		</li>
+		<div id="tab_xinde" style="top:40px" class="mui-control-content mui-active">
+			<li class="mui-table-view-cell" id="xinde_danghang_container">
+			<div id="segmentedControl" style="" class=" mui-segmented-control mui-segmented-control-inverted ">
+				<ul id="xinde_danghang" style="padding-top: 10px;" class="mui-table-view">
+					<!--<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted" >-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="3">
+						<a id="shoufang">
+							<img src="img/discover/shoufang_active.png"/>
+							<div class="mui-media-body" >
+								收房准备
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-cell">-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="2">
+						<a>
+							<img   src="img/discover/zhuangxiu.png"/>
+							<div class="mui-media-body" >
+								装修准备
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-cell ">-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="4">
+						<a>
+							<img src="img/discover/chaigai.png"/>
+							<div class="mui-media-body" >
+								拆改隐蔽
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-cell">-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="5">
+						<a>
+							<img src="img/discover/tumu.png"/>
+							<div class="mui-media-body" >
+								木工工程
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-divider">
+								<a href="#" name="category_2_6" class="mui-control-item">阳台</a>
+							</li>-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="6">
+						<a>
+							<img src="img/discover/youqi.png"/>
+							<div class="mui-media-body" >
+								油漆工程
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell" class="mui-control-item" value="7">
+						<a>
+							<img src="img/discover/anzhuangshouwei.png"/>
+							<div class="mui-media-body" >
+								安装收尾
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell" class="mui-control-item" value="8">
+						<a>
+							<img src="img/discover/ruanzhuang.png"/>
+							<div class="mui-media-body" >
+								软装心得
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell" class="mui-control-item" value="9">
+						<a>
+							<img src="img/discover/ruzhu.png"/>
+							<div class="mui-media-body" >
+								即将入住
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</li>
+				<!--Begin 左边面板-->
+			<div id="xinde_container"  class="mui-content ">
+				<ul style="padding-top: 10px;margin-top: 0px;" id="xinde_list_container" class="mui-table-view mui-table-view-chevron">
+		
+				</ul>
+				<div class="add_more_tab" id="add_more_xinde">点击加载更多</div>
+			</div>
+		</div>
+		
+		<div id="tab_tuku" class="mui-control-content">
+			<li class="mui-table-view-cell" id='tuku_danghang_container' style="width: 20%;padding: 0;list-style:none; vertical-align: top;float: left;position: fixed;top: 40px;">
+				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+					<ul id="tuku_danghang" style="padding-top: 10px;" class="mui-table-view">
+					<!--<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted" >-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="2">
+						<a>
+							<img src="img/discover/xiandai_active.jpg"/>
+							<div class="mui-media-body" >
+								<!--现代-->
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-cell">-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="3">
+						<a>
+							<img src="img/discover/jianyue.jpg"/>
+							<div class="mui-media-body" >
+								<!--简约-->
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-cell ">-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="4">
+						<a>
+							<img src="img/discover/zhongshi.jpg"/>
+							<div class="mui-media-body" >
+								<!--中式-->
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-cell">-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="5">
+						<a>
+							<img src="img/discover/oushi.jpg"/>
+							<div class="mui-media-body" >
+								<!--欧式-->
+							</div>
+						</a>
+					</li>
+					<!--<li class="mui-table-view-divider">
+								<a href="#" name="category_2_6" class="mui-control-item">阳台</a>
+							</li>-->
+					<li class="mui-table-view-cell" class="mui-control-item" value="6">
+						<a>
+							<img src="img/discover/meishi.jpg"/>
+							<div class="mui-media-body" >
+								<!--美式-->
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell" class="mui-control-item" value="7">
+						<a>
+							<img src="img/discover/tianyuan.jpg"/>
+							<div class="mui-media-body" >
+								<!--田园-->
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell" class="mui-control-item" value="8">
+						<a>
+							<img src="img/discover/dizhonghai.jpg"/>
+							<div class="mui-media-body" >
+								<!--地中海-->
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell" class="mui-control-item" value="9">
+						<a>
+							<img src="img/discover/qita.jpg"/>
+							<div class="mui-media-body" >
+							</div>
+						</a>
+					</li>
+				</ul>
+				</div>
+			</li>
+				<!--Begin 左边面板-->
+			<div id="tuku_container" class="mui-content">
+				<ul style="padding-top: 10px;margin-top: 0px;" id="tuku_list_container" class="mui-table-view mui-table-view-chevron">
+		
+				</ul>
+				<div class="add_more_tab" id="add_more_tuku">点击加载更多</div>
+		</div>
+		
+		</div>
+		
+		<script>
+			var is_first = true; 
+			var cur_page_xinde = 1;
+			var cur_page_tuku = 1;
+			var xinde_class_id = 1;
+			var tuku_class_id = 1;
+			var xinde_pre_img = null;
+			var tuku_pre_img = null;
+			var page = 8;
+			var last_tap = 0;
+			var article_detail_page = null;
+			var init_status = new Array();
+			init_status['xinde'] = false;
+			init_status['tuku'] = false;
+			var xinde_list_container = document.getElementById("xinde_list_container");
+			var tuku_list_container = document.getElementById("tuku_list_container");
+			var add_more_tuku = document.getElementById("add_more_tuku");
+			var add_more_xinde = document.getElementById("add_more_xinde");
+			var xinde_danghang_container = document.getElementById("xinde_danghang_container");
+			
+			var tuku_danghang_container = document.getElementById("tuku_danghang_container");
+			var xinde_container = document.getElementById("xinde_container");
+			var tuku_container = document.getElementById("tuku_container");
+			
+			add_more_xinde.addEventListener("tap",load_xinde);
+			add_more_tuku.addEventListener("tap",load_tuku);
+			document.getElementById("segmentedControl_tab").addEventListener("tap",tab_show());
+			window.addEventListener("init_discover_event",function(e){
+				if(init_status['xinde'] == true){
+					return; 
+				}
+				var style = "height:"+(document.body.clientHeight-40)+"px"; 
+			//console.log(style) 
+				xinde_container.setAttribute('style',style);
+			tuku_container.setAttribute('style',style);
+			tuku_danghang_container.setAttribute('style',style); 
+			xinde_danghang_container.setAttribute('style',style);
+				init_xinde(3);
+			});
+			mui.plusReady(function() { 
+				
+			article_detail_page = mui.preload({ 
+					url: "pages/article_detail.html",
+					id: "article_detail.html",
+				}, false); 
+				mui.init();
+				daohang_init();
+			});
+			function tab_show() {
+					return function(src) {
+						var element_id = src.target.name;
+						var element = document.getElementById(element_id);
+						element.setAttribute("style", "display: block;top:40px");
+						if(element_id == "tab_xinde"){
+							var tab = document.getElementById("tab_tuku");
+							tab.setAttribute("style", "display: none;")
+						}else{
+							if(init_status["tuku"] == false){
+								tuku_detail_page = mui.preload({ 
+									url: "pages/tuku_detail.html",
+									id: "tuku_detail.html",
+									}, false); 
+								init_tuku(2);
+							}
+							var tab = document.getElementById("tab_xinde");
+							tab.setAttribute("style", "display: none;")
+						}
+					}
+				}
+			function load_xinde(is_force){ 
+				if((add_more_xinde.innerText == "加载中..."||add_more_xinde.innerText=="没有更多了")&&is_force!=true)
+				{
+					return;
+				}
+				else{
+					add_more_xinde.innerText = "加载中...";
+				}
+				//console.log("http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=articleList&type=json&class_id=1&r="+page+"&page="+cur_page_xinde+"&class_id="+xinde_class_id);
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=articleList&type=json&class_id=1&r="+page+"&page="+cur_page_xinde+"&class_id="+xinde_class_id, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							//alert(value)
+							
+							var article_list = data.datas;
+							init_status['xinde'] = true;
+							if(article_list == null||article_list.length==0 ){
+								add_more_xinde.innerText = "没有更多了";
+								return;
+							}
+							var item = document.getElementById("item_temp").cloneNode(true);
+							
+							item.setAttribute("style", "");
+							for (var i = 0; i < article_list.length; i++) {
+								
+								var node = item.cloneNode(true);
+								getImageSrc(node.firstElementChild.children[0],article_list[i].article_image);
+								node.firstElementChild.children[1].children[0].innerText = article_list[i].article_title;
+								node.firstElementChild.children[1].children[1].innerText = article_list[i].article_abstract;
+								xinde_list_container.appendChild(node);
+								node.addEventListener('tap', grid_item_tap(article_list[i].article_id));
+							}
+							cur_page_xinde++;
+							add_more_xinde.innerText = "点击加载更多";
+							
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							add_more_xinde.innerText = "点击加载更多";
+							plus.nativeUI.closeWaiting();
+//							mui.toast("网络错误");
+//							mui('#container').pullRefresh().endPullupToRefresh(false);
+						}
+					});
+			}
+			function load_tuku(is_force){
+				if((add_more_tuku.innerText == "加载中..."||add_more_tuku.innerText=="没有更多了")&&is_force!=true)
+				{
+					return;
+				} 
+				else{ 
+					add_more_tuku.innerText = "加载中...";
+				}
+				//console.log("tuku loaddata url = http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=picList&type=json&curpage="+cur_page_tuku+"&page="+page+"&class_id="+tuku_class_id);
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=picList&type=json&curpage="+cur_page_tuku+"&page="+page+"&class_id="+tuku_class_id, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+						plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							var article_list = data.datas;
+							if(article_list == null||article_list.length==0){
+								add_more_tuku.innerText = "没有更多了";
+								return;
+							}
+							var item = document.getElementById("item_temp").cloneNode(true);
+							item.setAttribute("style", "");
+							for (var i = 0; i < article_list.length; i++) {
+								
+								var node = item.cloneNode(true);
+								getImageSrc(node.firstElementChild.children[0],article_list[i].picture_image);
+								node.firstElementChild.children[1].children[0].innerText = article_list[i].picture_title;
+								node.firstElementChild.children[1].children[1].innerText = article_list[i].picture_abstract;
+								tuku_list_container.appendChild(node);
+								node.addEventListener('tap', tuku_item_tap(article_list[i].picture_id));
+							}
+							cur_page_tuku++;
+							init_status['tuku'] = true;
+							add_more_tuku.innerText = "点击加载更多";
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							plus.nativeUI.closeWaiting();
+							add_more_tuku.innerText = "点击加载更多";
+							mui.toast("网络错误");
+//							mui('#container').pullRefresh().endPullupToRefresh(false);
+						}
+					}); 
+			}
+			function init_xinde(class_id){
+				cur_page_xinde = 1;
+				xinde_list_container.innerHTML = "";
+				xinde_class_id = class_id;
+				load_xinde(true)
+			}
+			function init_tuku(class_id){
+				cur_page_tuku = 1;
+				tuku_class_id = class_id;
+				tuku_list_container.innerHTML = "";
+				load_tuku(true)
+			}
+			
+			function grid_item_tap(article_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					mui.fire(article_detail_page, 'article_init_event', {
+						'article_id': article_id
+					});
+					article_detail_page.show("slide-in-right", 300);
+				}
+			}
+			function tuku_item_tap(picture_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					mui.fire(tuku_detail_page, 'tuku_init_event', {
+						'picture_id': picture_id
+					});
+					tuku_detail_page.show("slide-in-right", 300);
+				}
+			}
+			function reload_tuku_by_class(tuku_li,i){
+				return function(){
+					var img = tuku_li[i].firstElementChild.firstElementChild;
+					var args = img.src.split(".jpg");
+					var src_active = args[0]+"_active.jpg";
+					img.src = src_active;
+					if(tuku_pre_img!=null){
+						var pre_img = tuku_pre_img
+						var pre_args = tuku_pre_img.src.split("_active.jpg");
+						tuku_pre_img.src = pre_args[0]+".jpg";
+					}
+					tuku_pre_img = tuku_li[i].firstElementChild.firstElementChild;
+					var class_id = tuku_li[i].value;
+					init_tuku(class_id);
+				}
+			}
+			function reload_xinde_by_class(xinde_li,i){
+				return function(){ 
+					var img = xinde_li[i].firstElementChild.firstElementChild;
+					var args = img.src.split(".png");
+					var src_active = args[0]+"_active.png";
+					img.src = src_active;
+					if(xinde_pre_img!=null){
+						var pre_img = xinde_pre_img
+						var pre_args = xinde_pre_img.src.split("_active.png");
+						xinde_pre_img.src = pre_args[0]+".png";
+					}
+					xinde_pre_img = xinde_li[i].firstElementChild.firstElementChild;
+					var class_id = xinde_li[i].value;
+					init_xinde(class_id);
+				}
+			}
+			 //		//alert(cate_id_arr[1][0])
+			function daohang_init(){
+				var tuku_li = document.getElementById("tuku_danghang").children;
+				tuku_pre_img = tuku_li[0].firstElementChild.firstElementChild;
+				for(var i=0;i<tuku_li.length;i++){
+					tuku_li[i].addEventListener("tap",reload_tuku_by_class(tuku_li,i));
+				}
+				var xinde_li = document.getElementById("xinde_danghang").children;
+				xinde_pre_img = xinde_li[0].firstElementChild.firstElementChild;
+				for(var i=0;i<xinde_li.length;i++){
+					xinde_li[i].addEventListener("tap",reload_xinde_by_class(xinde_li,i));
+				}
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

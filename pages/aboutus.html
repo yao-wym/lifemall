@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.js"></script> 
+		<script src="../js/life_mall.js"></script> 
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-input-group:before,
+			.mui-input-group:after {
+				background-color: white;
+			}
+			#aboutus{
+				margin-top: 60px;
+    		padding:0;  
+    		overflow-x: hidden;  
+    		background-size:cover;  
+    		width: 100%;
+    		height: auto;
+			}
+			#inner-content p{
+				color: black;
+			}
+			#inner-content{
+				font-family: "微软雅黑";
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<header style="display: block;" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">关于我们</h1>
+		</header>
+		<div style="text-align: center;background-color: white;" class="mui-content">
+			<img style="margin-top: 30px;" src="../img/user/logo-80.png"/>
+			<div style="height: 1px;width: 80%;background-color: gray;margin: 20px auto;"></div>
+			<div id="inner-content"> 
+				<h4 style="width: 80%;margin: 0 auto;margin-top: 20px;">生活系商城.您身边的</h4>
+				<h4>服务专家</h4>
+				<p style="width: 80%;margin: 0 auto;margin-top: 40px;">我们极富创新与热情</p>
+				<p style="width: 80%;margin: 0 auto;">致力于用互联网手段改变现有生活模式</p>
+				<p style="width: 80%;margin: 0 auto;">为您提供高质量的服务与体验</p>
+			</div>
+			<div style="position: absolute;bottom: 80px;margin: 0 auto;width: 100%;">
+				<div style="height: 1px;background-color: gray;width: 80%;margin-left: 10%;"></div>
+				<p style="margin: 5px auto;color: black;font-family: '微软雅黑';">乌鲁木齐石头网络科技有限公司</p>
+				<div style="height: 1px;background-color: gray;width: 80%; margin-left: 10%;"></div>
+			</div> 
+			<div style="text-algin:center;font-family: '微软雅黑';width: 100%; color: black;font-size: 14px;position: absolute;bottom: 20px;margin: 0 auto;">
+				<span>电话：0991-6990702</span>
+				<span>传真：0991-6990702</span>
+				<div>Email:rocknetwork@163.com</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		mui.init();
+	</script>
+</html>

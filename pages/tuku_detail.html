@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：yuanyifanchn@163.com
+	时间：2015-01-28
+	描述：模板,风格指导...alt+ctrl+F的代码格式化,风格就是这么丑.......
+-->
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.js"></script>
+		<script src="../js/img_util.js"></script>
+		<link href="../css/mui.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin F3 图片*/
+			img{
+				max-width: 100%;
+			}
+			.mui-grid-9 img {
+				max-width: 100%;
+			}
+			.mui-grid-view.mui-grid-9 {
+				background-color: white;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				color: #929292;
+			}
+			/*End F3 图片*/
+			/*Begin block按钮*/
+			
+			.mui-table-view.mui-grid-view .mui-table-view-cell {
+				min-height: 100px;
+			}
+			.mui-table-view-cell>.mui-btn {
+				right: 0px;
+			}
+			/*End block按钮*/
+			
+			p {
+				padding: 10px 0;
+			}
+			#img_temp img{
+				margin-bottom: 10px;
+			}
+		</style>
+		<script>
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="picture_title" class="mui-title">图文详情</h1>
+		</header>
+		<li id="img_temp" style="display: none;"><img width="100%"/></li>
+		<div id="content" class="mui-content">
+			<div style="padding-top: 46px;"></div>
+			<ul class="mui-table-view" id="container">
+			</ul>
+			<!--End F2 图片广告 -->
+			
+		</div>
+		<script>
+		var container = document.getElementById("container");
+		var picture_title = document.getElementById("picture_title");
+		var img_temp = document.getElementById("img_temp").cloneNode(true);
+		img_temp.removeAttribute("style");
+		mui.plusReady(function(){
+			mui.init();
+		})
+			 //在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
+			window.addEventListener('dragright', function(e) {
+				e.detail.gesture.preventDefault();
+			});
+			window.addEventListener("tuku_init_event",function(e){
+				picture_id = e.detail.picture_id;
+				container.innerHTML = "";
+				picture_title.innerText = "";
+				load_picture_detail();
+			});
+			function load_picture_detail(){
+				plus.nativeUI.showWaiting("图库获取中...");
+				//console.log("http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=picDetail&type=json&picture_id="+ picture_id);
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_cms&op=picDetail&type=json&picture_id="+ picture_id, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							var data_str = JSON.stringify(data)
+							var img_list = data.datas.image_list;
+							picture_title.innerText = data.datas.picture_title;
+							if (img_list == null||img_list.length==0) {
+								return; 
+							} else { 
+								for(var i=0;i<img_list.length;i++){
+									var img = img_temp.cloneNode(true);
+									//console.log("http://www.shenghuoxi.com/nc/data/upload/cms/article/2/"+img_list[i].image_name);
+									getImageSrc(img.firstElementChild, "http://www.shenghuoxi.com/nc/data/upload/cms/article/"+data.datas.picture_publisher_id+"/"+img_list[i].image_name);
+									container.appendChild(img)
+								}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+						}
+					});
+			
+			};
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/life_mall.js"></script>
+		<script src="../js/img_util.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*Begin 处理顶部导航条搜索bar布局混乱*/
+			body{
+				font-family: "microsoft yahei";
+			}
+			/*.mui-search:before {
+				top: 65%;
+			}
+			.mui-input-row.mui-search .mui-icon-clear {
+				top: 0px;
+				right: 5px;
+			}*/
+			/*End 处理导航条布局混乱*/
+			/*Begin tab的字体颜色*/
+			
+			.mui-segmented-control {
+				color: darkgray;
+			}
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			#icon_container{
+				padding-top: 0px !important;
+				padding-bottom: 20px !important; 
+				margin-left: 72%;
+				width: 100px;
+				height: 50px;
+			}
+			#icon_container div{
+				margin-top: 12px;
+				margin-left: 40px;
+				color: #019ffe;
+			}
+			.mui-control-content{
+				/*margin-top: 60px；*/
+			}
+			.add_more_tab{
+				width: 100%; 
+				text-align: center; 
+				padding-top: 10px; 
+				height: 40px;
+			}
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			.line_2 {
+				font-family: "微软雅黑";
+				font-size: 14px;
+   			max-width:75%; 
+			max-height:47px; 
+			line-height:20px; 
+			text-overflow:ellipsis; 
+			overflow: hidden;
+			white-space:normal; 
+			*white-space:normal; 
+			overflow:hidden; 
+			padding-top: 5px !important;
+			}
+			/*End 列表图片大小*/
+		</style>
+	</head>
+
+	<body>
+		<!--Begin 搜索+返回,顶部导航-->
+		<header class="mui-bar mui-bar-nav">	
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 style="color: #019ffe;" class="mui-title">优惠促销商家</h1>
+			<span id="refresh_btn" style="float: right;" class="mui-icon mui-icon-reload"></span>
+		</header>
+		<!--End 搜索+返回,顶部导航-->
+		<!--Begin tab列表项-->
+	
+		<li style="display: none;  padding-top: 5px;" id="item_temp" class="mui-table-view-cell mui-media">
+			<a style="padding: 2px 0 1px 1px;" id="goods_id_1" href="#">
+				<img id="item_img" style="width:100%;margin: 5px 12px 0 5px;" class="mui-media-object mui-pull-left">
+				<div style=" margin-right: 0px;padding-top: 7px;" id="item_title"  class="mui-media-body mui-ellipsis">
+					<div id='store_title' class="line_2"></div>
+					<div id="store_describe" class="line_2" style="margin-top:2px;color: #ff0000;font-weight: bolder;"></div>
+					<p id="store_phone" ></p>
+					<p id="store_address" ></p>
+				</div>
+			</a>
+		</li>
+		<li style="display: none;  padding-top: 5px;" id="item_temp_2" class="mui-table-view-cell mui-media">
+			<a style="padding: 2px 0 1px 1px;" id="goods_id_1" href="#">
+				<img id="item_img" style="width:100%;margin: 5px 12px 0 5px;" class="mui-media-object mui-pull-left">
+				<div style=" margin-right: 0px;padding-top: 7px;" id="item_title"  class="mui-media-body mui-ellipsis">
+					<div id='worker_name'></div> 
+					<div class="line_2" style="height: 45px;font-size: 14px;"></div>
+					<p id="worker_phone" ></p>
+				</div>
+			</a>
+		</li>
+		<!--End tab列表项-->
+		<div id="shop_list" class="mui-content">
+			<div class="mui-content-padded" style="margin: 0;">
+				<div  id="item1mobile" class="mui-control-content mui-active">
+					<ul id="remen_list_container"  style="margin-top: 0px;" class="mui-table-view mui-table-view-chevron">
+						
+					</ul>
+					
+					<div class="add_more_tab" id="add_more_remen">点击加载</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			var is_first = true;
+			var is_jiancai_first = true
+			var init_status = new Array();
+			var cur_page = new Array();
+			cur_page['remen_list_container'] = 1;
+			cur_page['sheji_list_container'] = 1;
+			cur_page['shigongdui_list_container'] = 1;
+			init_status['remen_list_container'] = false;
+			init_status['sheji_list_container'] = false;
+			init_status['shigongdui_list_container'] = false;
+			var shop_detail_page = null;
+			gc_id = new Array();
+			gc_id["sheji_list_container"] = 1253;
+			gc_id["shigongdui_list_container"] = 1254;
+			gc_id["remen_list_container"] = 12;
+			var init_status_sheji = false;
+			var init_status_shigongdui = false;
+			var page = 8;
+			var last_tap = 0;
+//			var type_arr = ["remen","sheji","shigongdui"]
+			var type_arr = ["remen"];
+			var type_id_arr = ["remen_list_container","sheji_list_container","shigongdui_list_container"]
+			var add_more_btn = document.getElementById("add_more_remen");
+			add_more_btn.addEventListener("tap",add_more("remen_list_container"))
+			var refresh_btn = document.getElementById("refresh_btn");
+			refresh_btn.addEventListener("tap",refresh);
+			mui.init();
+			 mui.plusReady(function() {
+			    shop_detail_page = plus.webview.getWebviewById("shop_detail.html");
+			  	goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+			    mui('.mui-segmented-control').on('click', 'a', function(src) {
+                    src.preventDefault();
+                });
+               
+//              loadmore_gongsi("remen_list_container");
+			});
+			
+			function add_more(container_id){
+				return function(){
+					if(container_id == type_id_arr[0]){
+						loadmore_gongsi(container_id);
+					}
+				}
+			} 
+			function loadmore_gongsi(container_id,is_refresh) {
+				if((add_more_btn.innerText == "没有更多了"||add_more_btn.innerText == "加载中...")&&is_refresh!==true){
+					return;
+				}else{
+					add_more_btn.innerText = "加载中..."
+				}
+				 //console.log("http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_pointvoucher&op=voucherStoreList&page=" + page + "&curpage=" + cur_page[container_id]);
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_pointvoucher&op=voucherStoreList&page=" + page + "&curpage=" + cur_page[container_id], {
+						dataType: 'json', //服务器返回json格式数据
+						//				data:{"key":localStorage.getItem("key")},
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							var shop_list = data.datas;
+							//console.log(JSON.stringify(data));
+							var list_container = document.getElementById(container_id);
+							if(shop_list == null||shop_list=="null"||shop_list==""){
+								add_more_btn.innerText = "没有更多了";
+								return;
+							}else{
+								add_more_btn.innerText = "点击加载更多";
+							}
+							var item = document.getElementById("item_temp").cloneNode(true);
+							item.setAttribute("style", "display:block;padding-right: 0px; padding-top: 1px;margin-bottom:5px;padding-top: 7px;");
+							for (var i = 0; i < shop_list.length; i++) {
+								var node = item.cloneNode(true);
+								node.firstElementChild.children[1].children[0].innerText = shop_list[i].store_name;
+								node.firstElementChild.children[1].children[1].innerText = shop_list[i].store_description;
+								node.firstElementChild.children[1].children[2].innerText = shop_list[i].store_phone;
+								node.firstElementChild.children[1].children[3].innerText = shop_list[i].live_store_address;
+								getImageSrc(node.firstElementChild.children[0] , "http://www.shenghuoxi.com/nc/data/upload/shop/store/"+shop_list[i].store_avatar);
+								list_container.appendChild(node);
+								node.addEventListener('tap', shop_item_tap(shop_list[i].store_id));
+							}
+							cur_page[container_id]++;
+							init_status[container_id] = true;
+							
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							add_more_btn.innerText = "点击加载更多";
+							mui.toast("网络错误");
+						}
+					});
+			};
+			
+			function shop_item_tap(shop_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+//					var mall01 = plus.webview.getWebviewById("mall_01_page.html");
+					//console.log("grid_tap goods_detail...................");
+					  if(shop_detail_page == null){
+							//console.log("shop_detail preload");
+						 	shop_detail_page = mui.preload({
+								url:"shop_detail.html",
+								id:"shop_detail.html"
+							},false);
+						}else{
+							//console.log("shop_detail is loaded");
+						}
+					mui.fire(shop_detail_page, 'init_shop', {
+						'shop_id': shop_id
+					});
+//					alert(123)
+					shop_detail_page.show("slide-in-right", 300);
+//					mall01.hide();
+				};
+			};
+			 window.addEventListener("coupon_shop_list_init", function(e) {
+			 	if(init_status["remen_list_container"] == false){
+			 		//console.log("remen_list_container init");
+			 		loadmore_gongsi("remen_list_container");
+					
+			 	}else{
+			 		//console.log("shoplist_init is loaded");
+			    	
+			 	}
+			});
+			function refresh(){
+				cur_page["remen_list_container"] = 1;
+				var list_container = document.getElementById("remen_list_container");
+				list_container.innerHTML ="";
+				loadmore_gongsi("remen_list_container",true);
+				
+			}
+		</script>
+	</body>
+
+</html>

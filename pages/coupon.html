@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：yuanyifanchn@163.com
+	时间：2015-01-28
+	描述：模板,风格指导...alt+ctrl+F的代码格式化,风格就是这么丑.......
+-->
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/life_mall.js" ></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				/*background-color: #efeff4;*/
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-content p {
+				color: red;
+			}
+			#list_container p{
+				color: white;
+				margin-bottom: 0px;
+				line-height: 20px;
+				text-align: center;
+			}
+			#list_container .mui-control-item{
+				border: solid 0px;
+			}
+			.mui-segmented-control{
+				border: solid 0px;
+			}
+			body{
+				font-family: "microsoft yahei";
+			}
+			.store_name{
+				border-bottom: solid 1px #A9A9A9;
+			}
+			.mui-segmented-control .mui-control-item.mui-active{
+				color: black !important;
+				background-color: white !important;
+			}
+			.mui-segmented-control .mui-control-item{
+				color: darkgray ;
+				border-left:0px
+			}
+			.coupon_item{
+				width: 100%;
+				height:100px;
+				margin-top:8px;
+			}
+			.add_more_tab{
+				width: 100%; 
+				text-align: center; 
+				padding-top: 10px; 
+				height: 40px;
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<div id="item_temp" style="display: none;" class="mui-segmented-control coupon_item">
+						<a class="mui-control-item"style="color: white;text-align: center;padding: 10px;margin-right: -5px;height:100px;width: 15%;background: url(../img/coupon/my_coupon_jing_coupon_left_bk.png);background-size:100% 100%;">
+							<p style="text-align: center;overflow-wrap: break-word;">生</br>活</br>卷</p>
+						</a>
+						<a class="mui-control-item" style="padding-top: 10px;margin-right: -5px;height:100px;width: 70%;background: url(../img/coupon/my_coupon_jing_coupon_center_bk.jpg);background-size:100% 100%;">
+							<p class="store_name"  style="margin-bottom: 0px;">升达地板</p>
+							<p style="margin-bottom: 0px;font-weight: bold;">优惠满500减60</p>
+							<button style="width: 100px;height: 20px;padding:0px;color: #FF5053;margin-bottom: 0px;" style="background:;">点击使用</button>
+							<p style="margin-bottom: 0px;margin-top: -20px;">有效期20-3333</p>
+						</a>
+						<a class="mui-control-item" style="color: white;text-align: center;padding: 10px;height:100px;width: 15%;background: url(../img/coupon/my_coupon_jing_coupon_right_bk.png);background-size:100% 100%;">
+							<p>生</br>活</br>卷</p>
+						</a>
+			</div>
+		<header class="mui-bar mui-bar-nav">
+			<h1 style="color: #007AFF;" class="mui-title">我的优惠卷</h1>
+		</header>
+		<div style="margin-top: 50px;border-bottom: 1px solid #DDDDDD;" id="segmentedControl" class="mui-segmented-control">
+			<a class="mui-control-item mui-active" name="unuse_list_container" href="#unuse_container">
+				可使用
+			</a>
+			<a style="border-left: 1px solid #CCCCCC;" name="used_list_container" class="mui-control-item" href="#used_container">
+				已使用
+			</a>
+		</div>
+		<div class="mui-content-padded">
+			<div id="unuse_container" style="padding-top: 0px;" class="mui-control-content mui-active">
+				<ul id="unuse_list_container" class="mui-table-view mui-table-view-chevron">
+					
+				</ul>
+				<div class="add_more_tab" id="add_more_unuse_list_container">点击加载更多</div>
+			</div>
+			<div id="used_container" style="padding-top: 0px;" class="mui-control-content">
+				<ul id="used_list_container" class="mui-table-view mui-table-view-chevron">
+
+				</ul>
+				<div class="add_more_tab" id="add_more_used_list_container">点击加载更多</div>
+			</div>
+		</div>
+		<script>
+			var is_first = true;
+			var cur_page = 1;
+			var page = 4;
+			var last_tap = 0;
+			var init_status = new Array();
+			var voucher_state = new Array();
+			var unuse_list_container = document.getElementById("unuse_list_container");
+			var used_list_container = document.getElementById("used_list_container");
+			init_status['unuse_list_container'] = false;
+			init_status['used_list_container'] = false;
+			voucher_state['unuse_list_container'] = 1;
+			voucher_state['used_list_container'] = 2;
+			mui.init();
+			mui.plusReady(function() {
+				    document.getElementById('segmentedControl').addEventListener('tap', function(src) {
+			    	var tag = src.target.name;
+			    	var div_tag = document.getElementById(tag);
+			    	var classes = div_tag.parentElement.getAttribute("class");
+			    	var class_arr = classes.split(" ");
+			    	//console.log(classes);
+					if(init_status[tag] == false){
+						loadmore_coupon(tag);
+					}else if(class_arr[1] == "mui-active"){
+						refresh(tag)
+					}
+                    src.preventDefault();
+                });
+			});
+			document.getElementById("add_more_unuse_list_container").addEventListener("tap",function(){
+				 loadmore_coupon("unuse_list_container");
+			});
+			document.getElementById("add_more_used_list_container").addEventListener("tap",function(){
+				 loadmore_coupon("used_list_container");
+			});
+			window.addEventListener("init_coupon_event",function(e){
+				unuse_list_container.innerHTML="";
+				used_list_container.innerHTML="";
+				loadmore_coupon("unuse_list_container");
+			});
+			function coupon_item_tap(coupon) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					var user_id = localStorage.getItem("user_id");
+					var coupon_id = coupon.voucher_id;
+					var store_id = coupon.store_id;
+//					var voucher_code = coupon.voucher_code;
+					//console.log("coupon_id="+coupon_id+"&store_id="+store_id+"&user_id="+user_id);
+					mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_pointvoucher&op=use_voucher", {
+						dataType: 'json', //服务器返回json格式数据
+						data:{
+							'member_id':user_id,
+							'vid':coupon_id,
+							'store_id':coupon.store_id,
+//							'password':000000
+						},
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							//console.log(JSON.stringify(data));
+							if(data.datas == true){
+								mui.toast("使用成功");
+							}else{
+								mui.toast(data.datas);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							add_more_btn.innerText = "点击加载更多";
+							mui.toast("网络错误");
+						}
+					});
+				}
+			}
+			function refresh(container_id){
+				var list_container = document.getElementById(container_id);
+				list_container.innerHTML ="";
+				loadmore_coupon(container_id);
+			}
+			function loadmore_coupon(container_id) {
+				var add_more_btn = document.getElementById("add_more_"+container_id);
+				if(add_more_btn.innerText == "加载中..."||add_more_btn.innerText == "没有更多了"){
+					return;
+				}else{
+					add_more_btn.innerText = "加载中..."
+				}
+				 //console.log("http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_pointvoucher&op=member_voucher&member_id="+localStorage.getItem("user_id")+"&voucher_state="+voucher_state[container_id]);
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=rock_pointvoucher&op=member_voucher&member_id="+localStorage.getItem("user_id")+"&voucher_state="+voucher_state[container_id], {
+						dataType: 'json', //服务器返回json格式数据                                               
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							var coupon_list = data.datas;
+							//console.log(JSON.stringify(data.datas));
+							if (coupon_list == null||coupon_list.length==0) {
+								add_more_btn.innerText = "没有更多了";
+								return;
+							}
+							list_container = document.getElementById(container_id);
+							var item = document.getElementById("item_temp").cloneNode(true);
+							item.removeAttribute("style");
+							for (var i = 0; i < coupon_list.length; i++) {
+								var node = item.cloneNode(true);
+								node.children[1].children[0].innerText = coupon_list[i].store_name;
+								node.children[1].children[1].innerText = coupon_list[i].voucher_title;
+								node.children[1].children[3].innerText = getLocalTime(coupon_list[i].voucher_start_date)+"至"+getLocalTime(coupon_list[i].voucher_end_date);
+								list_container.appendChild(node);
+								node.children[1].children[2].addEventListener('tap', coupon_item_tap(coupon_list[i]));
+							}
+							cur_page[container_id]++;
+							init_status[container_id] = true;
+							add_more_btn.innerText = "点击加载更多";
+						},
+						error: function(xhr, type, errorThrown) {
+							add_more_btn.innerText = "点击加载更多";
+							mui.toast("网络错误");
+						}
+					});
+			};
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/life_mall.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-input-group:before, .mui-input-group:after {
+				background-color: white;
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">登陆</h1>
+		</header>
+		<div style="padding-top: 150px;">
+			<form class="mui-input-group" style="padding: 20px;">
+				<div class="mui-input-row" style="height: 100%;">
+					<label style="width: 30%;">
+						<img src="../img/user/username.jpg" style="max-height: 40px;">
+					</label>
+					<input id="username" type="text" class="mui-input-clear" style="height: 64px;width: 70%;"placeholder="请输入您的用户名">
+				</div>
+				<div class="mui-input-row" style="height: 100%;">
+					<label style="width: 30%;">
+						<img src="../img/user/psssword.jpg" style="max-height: 40px;">
+					</label>
+					<input id="password" type="password" class="mui-input-clear" style="height: 64px;width: 70%;" placeholder="请输入您的密码">
+				</div>
+				
+				<div class="mui-button-row" style="padding-top: 30px;">
+					<button id="login_submit" class="mui-btn   mui-btn-outlined" onclick="return false;" style="width: 40%;">登陆</button>&nbsp;&nbsp;
+					<button id="reg_btn" class="mui-btn  mui-btn-outlined" onclick="return false;" style="width: 40%;">注册</button>
+				</div>
+			</form>
+		</div>
+		<script>
+		mui.plusReady(function(){
+			mui.init();
+			var login_submit = document.getElementById("login_submit");
+			var reg_btn = document.getElementById("reg_btn");
+			login_submit.addEventListener('tap',login);
+			reg_btn.addEventListener('tap',show_reg);
+		})
+		function login(){
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			plus.nativeUI.showWaiting("登录中");
+			var client="android"
+			mui.ajax(
+				HOST_DIR+'index.php?act=login',
+				{
+					data:{
+						'username':username,
+						'password':password,
+						'client':client
+					},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					plus.nativeUI.closeWaiting();
+					if(data.datas.error!=null){
+						mui.alert(data.datas.error, '登陆失败', function() {});
+					}else{
+						mui.alert('登陆成功');
+						//console.log(JSON.stringify(data));
+						localStorage.setItem('key',data.datas.key);
+						localStorage.setItem('username',username);
+						localStorage.setItem('password',password);
+						localStorage.setItem('user_id',data.datas.user_id);
+						localStorage.setItem('login_time',Date.parse(new Date()));
+//						var usercenter=plus.webview.getWebviewById("user_center");
+//						plus.webview.close(usercenter);
+//						plus.webview.show( 'index.html' );
+//						plus.webview.hide(plus.webview.currentWebview(),'','',"onshow")
+//						mui.openWindow({
+//							url: '../user_center.html',
+//							id: 'user_center.html', 
+//					});
+					var usercenter=plus.webview.getWebviewById("user_center.html");
+					usercenter.evalJS("login_init()");
+					mui.back();
+//						var current=plus.webview.currentWebview();
+//						plus.webview.close(current);
+					}
+					
+				}, 
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast("网络错误");
+				}
+				});
+		}
+		function show_reg(){
+			mui.openWindow({
+							url: 'user_reg.html',
+							id: 'user_login', 
+					});
+		}
+			
+			/*
+			请求参数
+				username 用户名
+				password 密码
+				client 客户端类型(android wap ios wechat)
+				
+			返回数据
+				username 用户名
+				key 登录令牌
+			 * */
+		</script>
+	</body>
+
+</html>

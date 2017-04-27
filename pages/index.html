@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>生活系商城</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.js"></script>
+		<script type="text/javascript" src="js/img_util.js" ></script>
+		<script src="js/update.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/push.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/*--------    处理顶部导航条搜索bar布局混乱    --------*/
+			
+			/*.mui-search:before { 
+				top: 65%;
+			}
+			.mui-input-row.mui-search .mui-icon-clear {
+				top: 0px;
+				right: 5px;
+			}*/
+			#icon_container div{
+				margin-top: 12px;
+				margin-left: 40px;
+				color: #019ffe;
+			}
+			#icon_container{
+				padding-top: 0px !important;
+				padding-bottom: 20px !important; 
+				margin-left: 72%;
+				width: 100px;
+				height: 50px;
+			}
+			
+		</style>
+
+	</head>
+
+	<body>
+		<!--Begin 顶部导航 + 搜索Bar-->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div  class="mui-input-row mui-search" style="margin-top:-42px;margin-left: 38px;float: left;">
+				<input type="search" id="search" class=" mui-input-clear" placeholder="请输入您想搜索的商品" />
+			</div>
+			<div id="icon_container" style="">
+				<div id="search_btn" style="position: absolute; margin-bottom: 20px;padding-left: 10px;">搜索</div>
+			</div>
+		</header>
+		<!--End 顶部导航 + 搜索Bar-->
+
+		<!--Begin 底部bar-->
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="index_content.html">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">大厅</span>
+			</a>
+			<a class="mui-tab-item" href="category.html">
+				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-tab-label">分类</span>
+			</a>
+			<a class="mui-tab-item" href="discover.html">
+				<span class="mui-icon mui-icon-paperplane"></span>
+				<span class="mui-tab-label">攻略</span>
+			</a>
+			<a class="mui-tab-item" href="user_center.html">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<!--End 底部bar-->
+		<script>
+			 /*----------------  	Part 1   	变量声明  		----------------TODO */
+			var subpages = ['index_content.html', 'category.html', 'discover.html', 'user_center.html'];
+			var subpage_style = {
+				top: '0px',
+				bottom: '50px'
+			};
+			var subpage_style_with_header = {
+				top: '46px',
+				bottom: '50px'
+			};
+			/*----------------  	Part 2 		miu.init  		----------------TODO */
+			mui.init({
+				preloadLimit: 5,
+				swipeBack: false,
+				statusBarBackground: '#f7f7f7'
+			});
+			/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+			mui.plusReady(function() {
+				if(plus.webview.currentWebview().cache_img_list == null){
+					//console.log("cacheFileList is null" )
+					initFileList();
+				}
+				init_tab_bar();
+				init_goods();
+				init_search();
+				//android屏幕方向锁定
+				if (mui.os.android) {
+					plus.screen.lockOrientation("portrait-primary");
+				}
+			});
+			/*----------------  	Part 4 		页面设置			----------------TODO */
+			/*
+			 * 创建子页面，首个选项卡页面显示，其它均隐藏；
+			 * from:官方示例
+			 */
+			function init_tab_bar() {
+				var self = plus.webview.currentWebview();
+				for (var i = 0; i < 4; i++) {
+					if (i == 0 || i == 1) {
+						var sub = plus.webview.create(subpages[i], subpages[i], subpage_style_with_header);
+					} else if (i == 4) {
+						var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, '', '', function() {
+						});
+					} else {
+						var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+					}
+					if (i > 0) {
+						sub.hide();
+					}
+					self.append(sub);
+				}
+				//console.log("init_tab_bar is ok");
+			};
+			/*
+			 * 预加载goods_list.html和goods_detail.html页面；
+			 * from:yyf
+			 */
+			function init_goods() {
+				mui.preload({
+					url: "pages/goods_list.html",
+					id: "goods_list.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					}
+				}, false);
+				mui.preload({
+					url: "pages/goods_detail.html",
+					id: "goods_detail.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					}
+				}, false);
+				mui.preload({
+					url: "pages/mall_01_page.html",
+					id: "mall_01_page.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					} 
+				}, false);
+				mui.preload({
+					url: "pages/mall_02_page.html",
+					id: "mall_02_page.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					}
+				}, false);
+//				mui.preload({
+//					url: "index_slider.html",
+//					id: "index_slider.html",
+//					styles: {
+//						top: '0',
+//						height: '25%'
+//					}
+//				}, false); 
+				//console.log("init_mall_01&02 is ok");
+				//console.log("init_goods is ok");
+			};
+			/*
+			 * 搜索功能绑定；
+			 * * from:wym
+			 */
+			function init_search() {
+				var search_input = document.getElementById("search");
+				var search_btn = document.getElementById("search_btn");
+				search_btn.addEventListener("tap",function(e){
+					var goods_list_page = plus.webview.getWebviewById("goods_list.html");
+					var value_uri = encodeURI(search_input.value);
+						mui.fire(goods_list_page, 'set_list_data', {
+							'type': 'keyword',
+							'value': value_uri
+						});
+						goods_list_page.show("slide-in-right", 300);
+				});
+				search_input.addEventListener('keyup', function(e) {
+					if (e.keyCode == 13) {
+						var goods_list_page = plus.webview.getWebviewById("goods_list.html");
+						value_uri = encodeURI(search_input.value);
+						//console.log("show_goods_list");
+						mui.fire(goods_list_page, 'set_list_data', {
+							'type': 'keyword',
+							'value': value_uri
+						});
+						goods_list_page.show("slide-in-right", 300);
+					}
+				});
+				//console.log("init_search is ok");
+			};
+			
+			/*----------------  	Part 5 		事件处理			----------------TODO */
+			/*
+			 * 底部选项卡动作,
+			 * from:官方
+			 */
+			 //当前激活选项
+			var activeTab = subpages[0];
+			var title = document.getElementById("title");
+			 //			plus.webview.currentWebview().activeTab = activeTab;
+			 //选项卡点击事件
+			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				var targetTab = this.getAttribute('href');
+				//console.log("targetTab  " + targetTab);
+				//console.log("activeTab  " + activeTab);
+				if (targetTab == activeTab) {
+					return;
+				}
+				//显示目标选项卡  
+				plus.webview.show(targetTab);
+				//隐藏当前;
+				plus.webview.hide(activeTab);
+				//更改当前活跃的选项卡
+				activeTab = targetTab;
+			});
+			window.addEventListener("change_activeTab", function(e) {
+				activeTab = subpages[2];
+				//console.log("change_activeTab");
+			});
+			/*----------------  	Part 6 		平台相关			----------------TODO */
+			/*
+			 * 首页返回键处理
+			 * 处理逻辑：1秒内，连续两次按返回键，则退出应用；
+			 * from:官方
+			 */
+			var first = null;
+			mui.back = function() {
+				//首次按键，提示‘再按一次退出应用’
+				if (!first) {
+					first = new Date().getTime();
+					mui.toast('再按一次退出应用');
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if (new Date().getTime() - first < 1000) {
+						plus.runtime.quit();
+					}
+				}
+			};
+			/**
+			 * 获取缓存列表
+			 */
+		function initFileList(){
+			plus.io.requestFileSystem(plus.io.PUBLIC_DOWNLOADS, function(fs){
+			// fs.root是根目录操作对象DirectoryEntry
+			// 创建读取目录信息对象 
+			var directoryReader = fs.root.createReader();
+			directoryReader.readEntries( function( entries ){
+				for(var i=0; i < entries.length; i++ ) {
+					//console.log("cache file = "+ entries[i].name );
+					cacheFileList.push(entries[i].name);
+				} 
+				//console.log("cache file is "+ cacheFileList.toLocaleString());
+			sessionStorage.setItem("cacheFileList",cacheFileList.toLocaleString());
+		}, function ( e ) {
+			alert( "Read entries failed: " + e.message );
+		} );
+	});
+}
+		</script>
+	</body>
+
+</html>

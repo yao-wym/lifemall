@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/life_mall.js"></script>
+		<script src="../js/mui.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-input-group:before,
+			.mui-input-group:after {
+				background-color: white;
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div style="padding-top: 100px;">
+			<form class="mui-input-group" style="padding: 20px;">
+				<div class="mui-input-row" style="height: 100%;">
+					<label style="width: 30%;">
+						<span class="mui-icon mui-icon-person" style="color: lightgray;font-size: 30px;"></span> </label>
+					<input id="username" type="text" class="mui-input-clear" style="height: 50px;width: 70%;" placeholder="请输入您的用户名">
+				</div>
+				<div class="mui-input-row" style="height: 100%;">
+					<label style="width: 30%;">
+						<span class="mui-icon mui-icon-email" style="color: lightgray;font-size: 30px;"></span>
+					</label>
+					<input id="phone" type="text" class="mui-input-clear" style="height: 50px;width: 70%;" placeholder="请输入您的手机号">
+				</div>
+				<div class="mui-input-row" style="height: 100%;">
+					<label style="width: 30%;">
+						<span class="mui-icon mui-icon-locked" style="color: lightgray;font-size: 30px;"></span>
+					</label>
+					<input id="password" type="password" class="mui-input-clear" style="height: 50px;width: 70%;" placeholder="请输入您的密码">
+				</div>
+				<div class="mui-input-row" style="height: 100%;">
+					<label style="width: 30%;">
+						<span class="mui-icon mui-icon-locked" style="color: lightgray;font-size: 30px;"></span>
+					</label>
+					<input id="password_confirm" type="password" class="mui-input-clear" style="height: 50px;width: 70%;" placeholder="请确认您的密码">
+				</div>
+
+				<div class="mui-button-row" style="padding-top: 30px;">
+					<!--<button class="mui-btn   mui-btn-outlined" onclick="return false;" style="width: 40%;">注册</button>&nbsp;&nbsp;-->
+					<button id="reg_submit" class="mui-btn  mui-btn-outlined " onclick="return false;" style="width: 75%;height: inherit;">注册</button>
+				</div>
+			</form>
+		</div>
+		<script>
+			/* 
+			 请求参数
+			username 用户名
+			password 密码
+			password_confirm 密码确认
+			email 邮箱
+			client 客户端类型(android wap ios wechat)
+			
+			返回数据
+			username 用户名
+			key 登录令牌
+			 
+			 * */
+			mui.plusReady(function(){
+			mui.init();
+			var reg_submit = document.getElementById("reg_submit")
+			reg_submit.addEventListener('tap',submit);
+		});
+		function submit(){
+			var username = document.getElementById("username").value;
+			var phone = document.getElementById("phone").value+"@nc.com";
+			var password = document.getElementById("password").value;
+			var password_comfirm = document.getElementById("password_confirm").value;
+			var client="android"
+			plus.nativeUI.showWaiting();
+			mui.ajax( 
+				HOST_DIR+'index.php?act=login&op=register',
+				{
+					data:{
+						'username':username,
+						'email':phone,
+						'password':password,
+						'password_confirm':password,
+						'client':client,
+						},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					plus.nativeUI.closeWaiting();
+					if(data.datas.error==null){
+						mui.alert('注册成功', '注册成功，请登录', function() {});
+						mui.back();
+					}else{
+						mui.alert(data.datas.error, '错误', function() {});
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast("网络错误");
+				}
+				});
+		}
+		</script>
+	</body>
+
+</html>

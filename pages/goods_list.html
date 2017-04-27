@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="Cache-Control" content="max-age=30">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.js"></script>
+        <script src="../js/img_util.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*Begin 处理顶部导航条搜索bar布局混乱*/
+			
+			/*.mui-search:before {
+				top: 65%;
+			}
+			.mui-input-row.mui-search .mui-icon-clear {
+				top: 0px;
+				right: 5px;
+			}*/
+			/*End 处理导航条布局混乱*/
+			/*Begin tab的字体颜色*/
+			
+			.mui-segmented-control {
+				color: darkgray;
+			}
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			#list_title {
+				font-family: "微软雅黑";
+				font-size: 14px;
+   			max-width:75%; 
+			max-height:47px; 
+			line-height:20px; 
+			text-overflow:ellipsis; 
+			overflow: hidden;
+			white-space:normal; 
+			*white-space:normal; 
+			overflow:hidden; 
+			padding-top: 5px !important;
+			}
+			#item_img{
+			}
+			#icon_container div{
+				margin-top: 12px;
+				margin-left: 40px;
+				color: #019ffe;
+			}
+			#icon_container{
+				padding-top: 0px !important;
+				padding-bottom: 20px !important; 
+				margin-left: 72%;
+				width: 100px;
+				height: 50px;
+			}
+            .add_more_tab{
+                  width: 100%;
+                  text-align: center;
+                  padding-top: 10px;
+                  height: 42px;
+                  font-size: 18px;
+                  margin-top: -12px; 
+              }
+              .add_more_tab:hover{
+              	background-color: #E8E8E8;
+              }
+              #filter {
+  				display: table-cell;
+  				width: 1%;
+  				overflow: hidden;
+  				line-height: 38px;
+ 				color: darkgray;
+ 				text-align: center;
+ 				text-overflow: ellipsis;
+  				white-space: nowrap;
+  				border-color: #007aff;
+  				/*border-left: 1px solid #007aff;*/
+  				-webkit-transition: background-color .1s linear;
+          		transition: background-color .1s linear;
+			}
+			#myPopover li{
+				width: 100%;
+				text-align: center;
+				color: gray;
+			}
+			#myPopover{
+				width: auto;
+			}
+			/*End 列表图片大小*/
+		</style>
+	</head>
+
+	<body>
+ 		<li style="display: none;  padding-top: 5px;" id="item_temp" class="mui-table-view-cell mui-media">
+			<a style="padding: 2px 0 1px 1px;" id="goods_id_1" href="#">
+				<img id="item_img" style="width:100%;margin: 5px 12px 0 5px;" class="mui-media-object mui-pull-left">
+				<div style=" margin-right: 0px;" id="item_title"  class="mui-media-body mui-ellipsis">
+					<div id='list_title'></div>
+					<div id="item_price" style="margin-top:2px;color: #ff0000;font-weight: bolder;"></div>
+					<p id="item_describe" ></p>
+				</div>
+			</a>
+		</li>
+		<!--Begin 搜索+返回,顶部导航-->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div class="mui-input-row mui-search" style="margin-top:-42px;margin-left: 36px;float: left;">
+				<input id="search" type="search" class=" mui-input-clear" placeholder="请输入您想搜索的商品" />
+			</div>
+			<div id="icon_container" style="">
+				<div id="search_btn" style="position: absolute; margin-bottom: 20px;padding-left: 10px;">搜索</div>
+			</div>
+		</header>
+		<!--End 搜索+返回,顶部导航-->
+		<!--Begin tab列表项-->
+		<header class="mui-bar mui-bar-nav" style="top:44px;">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#goods_list_1">综合</a>
+				<a class="mui-control-item" href="#goods_list_2">收藏</a>
+				<a class="mui-control-item" href="#goods_list_3">价格</a>
+				<a style="display: none;" id="remen" class="mui-control-item" href="#goods_list_4">热门</a>
+				<a style="display: none;" id="filter" href="#myPopover">筛选</a>
+			</div>
+		</header>
+		<li id="pop_li" style="display: none;" class="mui-table-view-cell"></li>
+		<div id="myPopover" class="mui-popover">
+ 			<ul class="mui-table-view" style="width: 100%;"> 
+  			</ul>
+		</div>
+    <!--Begin 中间tab-->
+    <div class="mui-content-padded" style="margin-top: 100px;margin-bottom: 0px;">
+    <!--Begin goods_list 1页面-->
+    <div id="goods_list_1" class="mui-control-content mui-active" style="padding-top: 0">
+                <ul style="margin-top: 0;" class="mui-table-view mui-table-view-chevron">
+
+                </ul>
+                <div class="add_more_tab" id="add_more_goods_list_1" onclick="add_more('goods_list_1')">点击加载更多</div>
+    </div>
+    <!--End goods_list 1页面-->
+    <!--Begin goods_list 2页面-->
+        <div id="goods_list_2"  class="mui-control-content" style="padding-top: 0">
+            <ul style="margin-top: 0;" class="mui-table-view mui-table-view-chevron">
+
+            </ul>
+            <div class="add_more_tab" id="add_more_goods_list_2" onclick="add_more('goods_list_2')">点击加载更多</div>
+        </div>
+    <!--End goods_list 2页面-->
+
+    <!--Begin goods_list 3页面-->
+        <div id="goods_list_3" class="mui-control-content" style="padding-top: 0">
+            <ul style="margin-top: 0;" class="mui-table-view mui-table-view-chevron">
+
+            </ul>
+            <div class="add_more_tab" id="add_more_goods_list_3" onclick="add_more('goods_list_3')">点击加载更多</div>
+        </div>
+    <!--End goods_list 3页面-->
+
+    <!--Begin goods_list 4页面-->
+        <div id="goods_list_4" class="mui-control-content" style="padding-top: 0">
+            <ul style="margin-top: 0;" class="mui-table-view mui-table-view-chevron">
+
+            </ul>
+            <div class="add_more_tab" id="add_more_goods_list_4" onclick="add_more('goods_list_4')">点击加载更多</div>
+        </div>
+    <!--End goods_list 4页面-->
+
+        </div>
+		<script type="text/javascript" charset="utf-8">
+           var init_array = {
+                'goods_list_1':0,
+                'goods_list_2':0,
+                'goods_list_3':0,
+                'goods_list_4':0
+            };
+           var type_arr = {
+               'goods_list_1':0,
+               'goods_list_2':1,
+               'goods_list_3':3,
+               'goods_list_4':2
+           };
+           var page_arr={
+               'goods_list_1':1,
+               'goods_list_2':1,
+               'goods_list_3':1,
+               'goods_list_4':1
+           };
+            var last_tap = 0;
+			var activeTabID = "goods_list_1";
+			var type = null;
+			var value = null;
+            var cur_page = 1;
+			var PAGE_NUM = 8;
+			var subpage_style_with_header = {
+				top: '96px',
+				bottom: '0px'
+			}; 
+			var flag = 1;
+			var pop_ul = document.getElementById("myPopover").firstElementChild;
+			var subpages = ['goods_list_1', 'goods_list_2', 'goods_list_3', 'goods_list_4'];
+			var list_type, list_value;
+			var goods_list_page = null;
+			var index_content_page = null;
+			var search_input = document.getElementById("search");
+			var remen_container = document.getElementById("remen");
+			var shaixuan_container = document.getElementById("filter");
+           function loadmore(container_id, type, value, key_order, page, curpage) {
+           	//console.log("add_more_"+container_id)
+               if(document.getElementById("add_more_"+container_id).innerText=="加载中..."){
+                   return;
+               }
+               var value_uri = encodeURI(value);
+               if(container_id!="goods_list_3"){
+               	  var url = "http://www.shenghuoxi.com/nc/mobile/index.php?act=goods&op=goods_list&type=json&" + type + "=" + value + "&key=" + key_order + "&page=" + page + "&order=1&curpage=" + curpage
+               }else{
+               	 var url = "http://www.shenghuoxi.com/nc/mobile/index.php?act=goods&op=goods_list&type=json&" + type + "=" + value + "&key=" + key_order + "&page=" + page + "&order="+flag+"&curpage=" + curpage
+               }
+               //console.log(url)
+               document.getElementById("add_more_"+container_id).innerText="加载中...";
+               mui.ajax(
+                      url , {
+                           dataType: 'json', //服务器返回json格式数据
+                           type: 'get', //HTTP请求类型
+                           timeout: 10000, //超时时间设置为10秒；
+                           success: function(data) {
+                               //console.log(JSON.stringify(data))
+                               var goods_list = data.datas.goods_list;
+                               var item = document.getElementById("item_temp").cloneNode(true);
+                               var list_container = document.getElementById(container_id);
+                               item.setAttribute("style", "display:block;padding-right: 0px; padding-top: 1px;margin-bottom:14px;margin-top: 7px;");
+                               for (var i = 0; i < goods_list.length; i++) {
+
+                                   var node = item.cloneNode(true);
+                                   node.firstElementChild.children[1].children[0].innerText = goods_list[i].goods_name;
+                                   node.firstElementChild.children[1].children[1].innerText = "价格:"+goods_list[i].goods_price;
+                                   node.firstElementChild.children[1].children[2].innerText = "评分:"+goods_list[i].evaluation_good_star;
+                                   img_src_arr = goods_list[i].goods_image_url.split("_360");
+                                   img_src = img_src_arr[0] + img_src_arr[1];
+                                   getImageSrc(node.firstElementChild.children[0],img_src);
+                                  	node.addEventListener('tap', grid_item_tap(goods_list[i].goods_id));
+                                   list_container.firstElementChild.appendChild(node);
+                               }
+                               page_arr[container_id]++;
+//                               alert( page_arr[container_id]);
+                               if (data.hasmore == false) {
+                                   document.getElementById("add_more_"+container_id).innerText="没有更多了";
+                               }else{
+                                   document.getElementById("add_more_"+container_id).innerText="点击加载更多";
+                               }
+                           },
+                           error: function(xhr, type, errorThrown) {
+                               document.getElementById("add_more_"+container_id).innerText="点击加载更多";
+                               //console.log(JSON.stringify(xhr))
+                               mui.toast("网络错误");
+                           }
+                       });
+           }
+
+           function reload_data(container_id,type_new, value_new,order_type) {
+               //console.log("scroll-back&refresh_init");
+               type = type_new;
+               value = value_new;
+               loadmore(container_id, type, value, order_type, PAGE_NUM,  page_arr[container_id]);
+           }
+           function add_more(container_id){
+               if(document.getElementById("add_more_"+container_id).innerText=="没有更多了"){
+                   return;
+               }
+               loadmore(container_id, type, value, type_arr[container_id], PAGE_NUM, page_arr[container_id]);
+           }
+			mui.plusReady(function() {
+				mui.init();
+				document.getElementById('segmentedControl').addEventListener("tap", function(e) {
+					var targetTab = e.target.getAttribute('href');
+                    var targetTabID = targetTab.substring(1);
+                    if(targetTabID == "myPopover"){
+                    	return;
+                    }
+					if (targetTabID == activeTabID) {
+						if(targetTabID == subpages[2]){
+							document.getElementById(targetTabID).firstElementChild.innerHTML = "";
+							flag = (flag+1)%2;
+							page_arr[targetTabID] = 1;
+							reload_data(targetTabID,type,value,type_arr[targetTabID]);
+							init_array[targetTabID] = 1;
+						}
+						return;
+					}
+					//更改当前活跃的选项卡
+					activeTabID = targetTabID;
+					//todo 2015-4-2 只在当前activetab下请求数据。
+					if(init_array[targetTabID] == 0){
+                        reload_data(targetTabID,type,value,type_arr[targetTabID]);
+						init_array[targetTabID] = 1;
+					}
+				});
+				search_input.addEventListener('keyup', function(e) {
+						if (e.keyCode == 13) {
+							var value_uri = encodeURI(search_input.value);
+							type = "keyword";
+							value = value_uri;
+							pop_ul.innerHTML = "";
+							init_view()
+						//					init_sub_views();
+					}
+				});
+				var search_btn = document.getElementById("icon_container");
+				search_btn.addEventListener('tap', function(e) {
+					var value_uri = encodeURI(search_input.value);
+					type = "keyword";
+					value = value_uri;
+					pop_ul.innerHTML = "";
+					init_view()
+					
+				});
+				if (plus.webview.currentWebview().type == "keyword") {
+					search_input.focus()
+					search_input.value = plus.webview.currentWebview().value;
+				}
+			});
+
+			function init_sub_views() {
+				//选项卡点击事件
+				if(activeTabID == "goods_list_4"){
+					activeTabID = "goods_list_1";
+					document.getElementById('segmentedControl').firstElementChild.setAttribute("class","mui-control-item mui-active");
+					document.getElementById('remen').setAttribute("class","mui-control-item");
+					document.getElementById('goods_list_1').setAttribute("class","mui-control-content mui-active");
+					document.getElementById('goods_list_4').setAttribute("class","mui-control-content");
+				}
+                reload_data(activeTabID,type,value,type_arr[activeTabID]);
+                init_array[activeTabID] = 1;
+			}
+			window.addEventListener("set_list_data", function(e){
+					type = e.detail.type;
+					value = e.detail.value;
+					pop_ul.innerHTML = "";
+					init_view()
+					get_filter_list();
+			});
+			function get_filter_list(){
+			 	var pop_li = document.getElementById("pop_li").cloneNode(true);
+			 	pop_li.removeAttribute("style");
+			 	plus.nativeUI.showWaiting("努力加载中...");
+			 	mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?op=index&act=goods_class&gc_id="+value, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data))
+							var class_list = data.datas.class_list;
+							for(var i=0;i<class_list.length;i++){
+								var node = pop_li.cloneNode(true);
+								if(class_list[i].gc_name == null){
+									node.innerText = '暂无更多分类';
+								pop_ul.appendChild(node);
+									return;
+								}
+								node.innerText = class_list[i].gc_name;
+								node.nodeValue = class_list[i].gc_id;
+								node.addEventListener('tap',on_filter_tap(class_list[i].gc_id))
+								pop_ul.appendChild(node);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(JSON.stringify(xhr))
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+						}
+					});
+			 }
+			function on_filter_tap(gc_id){
+				return function(){
+					goods_list_filter(gc_id)
+				}
+			}
+			function goods_list_filter(gc_id){
+				value = gc_id;
+				plus.webview.currentWebview().value = gc_id;
+				init_view();
+			}
+			function init_view(){
+			init_array = {
+                'goods_list_1':0,
+                'goods_list_2':0,
+                'goods_list_3':0,
+                'goods_list_4':0
+            };
+           page_arr={
+               'goods_list_1':1,
+               'goods_list_2':1,
+               'goods_list_3':1,
+               'goods_list_4':1
+           };
+				document.getElementById("goods_list_1").firstElementChild.innerHTML = "";
+				document.getElementById("goods_list_2").firstElementChild.innerHTML = "";
+				document.getElementById("goods_list_3").firstElementChild.innerHTML = "";
+				document.getElementById("goods_list_4").firstElementChild.innerHTML = "";
+				if(type == "keyword"){
+					search_input.value = decodeURI(value);
+					search_input.focus();
+					remen_container.setAttribute('style','');
+					shaixuan_container.setAttribute('style','display: none;');
+				}else{
+					shaixuan_container.setAttribute('style','');
+					remen_container.setAttribute('style','display: none;');
+					search_input.value = "";
+				}
+                //console.log("type ="+type+"&value="+value);
+				init_sub_views();
+			}
+			function grid_item_tap(goods_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					var goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+					//console.log("grid_tap goods_detail");
+					mui.fire(goods_detail_page, 'from_list_data', {
+						'goods_id': goods_id
+					});
+					goods_detail_page.show("slide-in-right", 300);
+				}
+			}
+		</script>
+	</body>
+
+</html>

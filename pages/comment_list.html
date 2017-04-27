@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/life_mall.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			/*页面单独css代码*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">咨询评价</h1>
+		</header>
+		<div style="padding-top: 46px;"></div>
+		<ul id="comment_container" class="mui-table-view">
+		</ul>
+		<li style="display: none;" id="comment_item_tpl" class="mui-table-view-cell">
+			<div style="color: slategray;font-size: 14px;padding-bottom: 10px;font-weight: bold;">
+				<label >游客</label>
+				<labelstyle="float: right;">2015-03-21</label>
+			</div>
+			<p style="color:black; font-size: 16px;">	
+			</p>
+		</li>
+		<div style="text-align: center; height: 40px;padding-top: 10px;" id="add_more_tab">点击加载更多</div>
+		<script type="text/javascript" charset="utf-8">
+			 /*----------------  	Part 1   	变量声明  		----------------TODO */
+			var cur_page = 1;
+			var page_num = 10;
+			var goods_id = null;
+			var is_first = true;
+			
+			var comment_item_tpl = document.getElementById("comment_item_tpl").cloneNode(true);
+			var comment_container = document.getElementById("comment_container");
+			var add_more_tab = null;
+			comment_item_tpl.removeAttribute("style");
+			/*----------------  	Part 2 		miu.init  		----------------TODO */
+			mui.init();
+			/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+			
+			/*----------------  	Part 4 		页面设置			----------------TODO */
+			window.addEventListener("load_comment",function(e){
+				add_more_tab = document.getElementById("add_more_tab");
+				//console.log("load_comment");
+				comment_container.innerHTML = "";
+				cur_page = 1;
+				add_more_tab.innerText = "点击加载更多";
+				
+				goods_id = e.detail.goods_id;
+				//console.log("goods_id ="+goods_id);
+				load_more_comment(goods_id);
+			});
+			/*----------------  	Part 5 		事件处理			----------------TODO */
+			function load_more_comment(goods_id){
+				if(add_more_tab.innerText == "没有更多了"){
+//					mui.toast("没有更多评论");
+					return;
+				}
+				plus.nativeUI.showWaiting("加载中...");
+				mui.ajax(
+					HOST_DIR+'index.php?act=rock_goods_comment&op=commentList&type=json&page='+cur_page+'&r='+page_num+'&goods_id='+goods_id, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//console.log(JSON.stringify(data));
+//											var data_str = 
+							var goods_content_3 = document.getElementById("goods_content_3");
+							if(data.datas != null){
+								for(var i=0;i<data.datas.length;i++){
+								var comment_item = comment_item_tpl.cloneNode(true);
+								comment_item.firstElementChild.children[0].innerText = data.datas[i].user_name;
+								comment_item.firstElementChild.children[1].innerText = data.datas[i].create_time;
+								comment_item.firstElementChild.nextElementSibling.innerText = data.datas[i].comment;
+								comment_container.appendChild(comment_item);
+								}
+								cur_page++;
+								if(is_first == true){
+									is_first = false;
+									add_more_tab.addEventListener("tap",function(){
+										load_more_comment(goods_id);
+								});
+								}
+							}else{
+								mui.toast("没有更多评论");
+								add_more_tab.innerText = "没有更多了";
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+						}
+					});
+			}
+			/*----------------  	Part 6 		平台相关			----------------TODO */
+		</script>
+	</body>
+
+</html>

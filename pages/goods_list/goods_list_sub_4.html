@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../../js/mui.js"></script>
+		<script type="text/javascript" src="../../js/img_util.js" ></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*Begin 处理顶部导航条搜索bar布局混乱*/
+			
+			.mui-search:before {
+				top: 65%;
+			}
+			.mui-input-row.mui-search .mui-icon-clear {
+				top: 0px;
+				right: 5px;
+			}
+			/*End 处理导航条布局混乱*/
+			/*Begin tab的字体颜色*/
+			
+			.mui-segmented-control {
+				color: darkgray;
+			}
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			#list_title {
+				font-family: "微软雅黑";
+				font-size: 14px;
+   			max-width:75%; 
+			max-height:47px; 
+			line-height:20px; 
+			text-overflow:ellipsis; 
+			overflow: hidden;
+			white-space:normal; 
+			*white-space:normal; 
+			overflow:hidden; 
+			padding-top: 5px !important;
+			}
+			#item_img{
+			}
+			/*End 列表图片大小*/
+		</style>
+	</head>
+
+	<body>
+		<li style="display: none;  padding-top: 5px;" id="item_temp" class="mui-table-view-cell mui-media">
+			<a style="padding: 2px 0 1px 1px;" id="goods_id_1" href="#">
+				<img id="item_img" style="width:100%;margin: 5px 12px 0 5px;" class="mui-media-object mui-pull-left" src="../../img/home/home_toolbar_cion_01_off.png">
+				<div style=" margin-right: 0px;" id="item_title"  class="mui-media-body mui-ellipsis">
+					<div id='list_title'>木犁犁家具 高档橡木床22222222ssssssss犁家具 高档橡木床22222222ssssssss犁家具 高档橡木床22222222ssssssss犁家具 高档橡木床22222222ssssssss犁家具 高档橡木床22222222ssssssss家具 高档橡木床22222222ssssssss22</div>
+					<div id="item_price" style="margin-top:2px;color: #ff0000;font-weight: bolder;">￥9.9</div>
+					<p id="item_describe" >木犁家具 高档橡木床 实木床 双人床 田园床 简约现代中式床1.8米</p>
+				</div>
+			</a>
+		</li>
+			<div id="container" style="background-color: white;" class="mui-content mui-scroll-wrapper">
+  			<div class="mui-scroll">
+    		<ul style="margin-top: 0px;" class="mui-table-view mui-table-view-chevron" id="goods_list">
+   		 	</ul>
+  		</div>
+		<script type="text/javascript" charset="utf-8">
+			var PAGE_NUM = 6;
+			var ORDER_REVIEW = 2;
+			var ORDER_SALES = 1;
+			var ORDER_PRICE = 3;
+			var ORDER_NEW = "";
+			var cur_page = 1; 
+			var last_tap = 0;
+			mui.plusReady(function() {
+				mui.init({
+					pullRefresh: {
+						container: "#container", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						//  					down : {
+						//    					contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						//    					contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						//    					contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						//    					callback : refresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						//  					},
+						up: {
+							contentrefresh: "上拉加载更多", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: load_more //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+//				type = plus.webview.currentWebview().parent().type;
+//				value = plus.webview.currentWebview().parent().value
+//				loadmore("goods_list", type, value, ORDER_NEW, PAGE_NUM, cur_page);
+			});
+
+			function loadmore(container_id, type, value, key_order, page, curpage) {
+				//				//alert("http://www.shenghuoxi.com/nc/mobile/index.php?act=goods&op=goods_list&"+type+"="+value+"&key="+key_order+"&page="+page+"&curpage="+cur_page)
+				plus.nativeUI.showWaiting("数据拉取中...");
+				mui.ajax(
+					"http://www.shenghuoxi.com/nc/mobile/index.php?act=goods&op=goods_list&type=json&" + type + "=" + value + "&key=" + key_order + "&page=" + page + "&curpage=" + cur_page, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							//alert(JSON.stringify(data))
+							//alert(value)
+							var goods_list = data.datas.goods_list;
+							var item = document.getElementById("item_temp").cloneNode(true);
+							var list_container = document.getElementById(container_id);
+							item.setAttribute("style", "display:block;padding-right: 0px; padding-top: 1px;margin-bottom:14px;margin-top: 7px;");
+							for (var i = 0; i < goods_list.length; i++) {
+								
+								var node = item.cloneNode(true);
+								node.firstElementChild.children[1].children[0].innerText = goods_list[i].goods_name;
+								node.firstElementChild.children[1].children[1].innerText = "价格:"+goods_list[i].goods_price;
+								node.firstElementChild.children[1].children[2].innerText = "评分:"+goods_list[i].evaluation_good_star;
+								img_src_arr = goods_list[i].goods_image_url.split("_360");
+								img_src = img_src_arr[0] + img_src_arr[1];
+								getImageSrc(node.firstElementChild.children[0] , img_src);
+								list_container.appendChild(node);
+								node.addEventListener('tap', grid_item_tap(goods_list[i].goods_id));
+							}
+							cur_page++;
+							if (data.hasmore == false) {
+								mui('#container').pullRefresh().endPullupToRefresh(true);
+							} else {
+								mui('#container').pullRefresh().endPullupToRefresh(false);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+							mui('#container').pullRefresh().endPullupToRefresh(false);
+						}
+					});
+			}
+
+			function grid_item_tap(goods_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+					var goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+					//console.log("grid_tap goods_detail");
+					mui.fire(goods_detail_page, 'from_list_data', {
+						'goods_id': goods_id
+					});
+					goods_detail_page.show("slide-in-right", 300);
+				}
+			}
+
+			function load_more() {
+				loadmore("goods_list", type, value, ORDER_REVIEW, PAGE_NUM, cur_page);
+			}
+
+			function refresh() {
+				mui('#container').pullRefresh().endPulldownToRefresh(true);
+			}
+
+			function reload_data(type_new, value_new) {
+				if(plus.os.name == "iOS"){
+					//ios中重新加载列表不手动执行此语句则无法返回顶部，在Android系统中会自动返回若执行此语句则会导致无法拉动的情况
+					mui('#container').scroll().scrollTo(0,0);
+				}
+				mui('#container').pullRefresh().refresh(true)
+				type = type_new;
+				value = value_new;
+				cur_page = 1;
+				var list_container = document.getElementById("goods_list");
+				list_container.innerHTML = ""
+				loadmore("goods_list", type, value, ORDER_REVIEW, PAGE_NUM, cur_page);
+			}
+		</script>
+	</body>
+
+</html>

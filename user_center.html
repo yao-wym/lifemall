@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*背景色要一直,浅灰#efeff4*/
+			
+			.mui-content {
+				background-color: #efeff4;
+			}
+			/*自己的css,写到一个文件,相对独立,html当模块调用*/
+			/*Begin 每个元素要有开头和结尾*/
+			
+			.mui-content p {
+				color: red;
+			}
+			/*End 每个元素要有开头和结尾*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">我的生活系</h1>
+		</header>
+		<div class="mui-content">
+			<div style="height: 150px;background-image: url(img/home/user_bg.jpg);background-size:100%;text-align: center;vertical-align: middle;">
+				<a id="login_btn" class="mui-tab-item" style="text-align: center;vertical-align: middle;">
+					<img class="mui-text-center" src="img/home/user_logo.png" style="max-height: 70px;width: auto; margin-top: 50px;" />
+					<div id="login_txt" style="color: #666666">点击登录</div>
+				</a>
+			</div>
+
+			<!--<ul class="mui-table-view" style="padding: 0;vertical-align: middle;">
+				<li class="mui-table-view-cell ">
+					<div class="mui-block" style="float:left;">
+						<img style="max-height: 50px;" src="../img/shop/shop_logo.jpeg">
+					</div>
+					<div style="float: left;">
+						<a id='collectBtn' class="mui-tab-item" style="font-size:x-small;text-align: center;vertical-align: middle;color:darkgray;">
+							<span class="mui-icon mui-icon-phone" style="display: block;font-size: 35px;"></span>&nbsp;联系商家&nbsp;
+						</a>
+					</div>
+					<div style="float: left; padding-right: 10px;">
+						<a id='collectBtn' class="mui-tab-item" style="font-size:x-small;text-align: center;vertical-align: middle;color:darkgray;">
+							<span class="mui-icon mui-icon-star" style="display: block;font-size: 35px;"></span>&nbsp;&nbsp;关注&nbsp;&nbsp;
+						</a>
+					</div>
+				</li>
+			</ul>-->
+			<ul style="display: none;" class="mui-table-view">
+				<li class="mui-table-view-divider"></li>
+
+				<li class="mui-table-view-cell">
+					<a  id='goods_collect_btn' class="mui-navigate-right">我的收藏</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="my_coupon">我的优惠券</a>
+				</li>
+			</ul>
+			
+			<ul class="mui-table-view">
+				<li class="mui-table-view-divider"></li>
+
+				<!--<li class="mui-table-view-cell">
+					<a id='goods_detail_content' class="mui-navigate-right">美居平面图</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id='goods_detail_content' class="mui-navigate-right">华凌平面图</a>
+				</li>-->
+				<li class="mui-table-view-cell" id="aboutus">
+					<a class="mui-navigate-right">关于我们</a>
+				</li>
+				<!--<li id="suggesttion" class="mui-table-view-cell">
+					<a class="mui-navigate-right" >意见反馈</a>
+				</li>-->
+			</ul>
+		</div>
+		<script>
+		mui.plusReady(function(){
+//			alert(plus.webview.all())
+			mui.init();
+			var page = mui.preload({
+   				 url:"pages/user_login.html",
+   				 id:"user_login.html",//默认使用当前页面的url作为id
+   			 styles:{},//窗口参数
+  			 extras:{}//自定义扩展参数
+			});
+			mui.preload({
+					url: "pages/collect_list.html",
+					id: "collect_list.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					}
+				}, false);
+				mui.preload({
+					url: "pages/aboutus.html",
+					id: "aboutus.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					}
+				}, false);
+				coupon_list_page = mui.preload({
+					url: "pages/coupon_list.html",
+					id: "coupon_list.html",
+					styles: {
+						top: '0px',
+						bottom: '0px',
+					}
+				}, false);
+			var login_btn = document.getElementById("login_btn");
+			var aboutus_li = document.getElementById("aboutus")
+			aboutus_li.addEventListener("tap",show_aboutus);
+			if(localStorage.getItem('key') != null){
+				login_init()
+			}else{
+				login_btn.addEventListener('tap',function(){
+//				var list = plus.webview.getWebviewById('user_login.html');//这里可能返回空；	
+//				plus.webview.show("user_login.html")
+//				plus.webview.hide(plus.webview.currentWebview().parent())
+				mui.openWindow({
+							url: 'pages/user_login.html',
+							id: 'user_login', 
+					});
+			});
+			}
+		});
+			function login_out_fn(){
+				localStorage.removeItem('key');
+				localStorage.removeItem('user_id');
+				localStorage.removeItem('username');
+				localStorage.removeItem('password');
+				location.reload();
+			}
+			function login_init(){
+				var aboutus_li = document.getElementById("aboutus")
+				var goods_collect = document.getElementById("goods_collect_btn");
+				var my_coupon = document.getElementById("my_coupon");
+				login_txt.innerText="已登录"
+				var login_out = aboutus_li.cloneNode(true); 
+				login_out.children[0].innerText = "注销登陆";
+				login_out.id = "login_out"
+				aboutus_li.parentElement.appendChild(login_out)
+				login_out.addEventListener('tap',login_out_fn); 
+				goods_collect.parentNode.parentNode.removeAttribute("style");
+				my_coupon.addEventListener('tap',function(){
+				mui.fire(coupon_list_page, 'init_coupon_event');
+				coupon_list_page.show("slide-in-right", 300);
+			});
+				goods_collect.addEventListener('tap',function(){
+				collect_list_page = plus.webview.getWebviewById("collect_list.html");
+				mui.fire(collect_list_page, 'init_list');
+				collect_list_page.show("slide-in-right", 300);
+			});
+			} 
+			function show_aboutus(){
+				var aboutus_page = plus.webview.getWebviewById("aboutus.html");
+				aboutus_page.show("slide-in-right", 300);
+			}
+			function onShowed(){
+//				alert(1)
+				var aboutus_li = document.getElementById("aboutus")
+			var goods_collect = document.getElementById("goods_collect_btn");
+			var login_btn = document.getElementById("login_btn");
+			if(localStorage.getItem('key') != null){
+				login_btn.parentNode.innerHTML=""
+				var login_out = aboutus_li.cloneNode(true); 
+				login_out.children[0].innerText = "注销登陆";
+				login_out.id = "login_out"
+				aboutus_li.parentElement.appendChild(login_out)
+				login_out.addEventListener('tap',login_out_fn);
+			}else{
+				login_btn.addEventListener('tap',function(){
+				plus.webview.show("user_login.html")
+//				mui.openWindow({
+//							url: 'pages/user_login.html',
+//							id: 'user_login', 
+//					});
+			});
+			}
+			}
+		</script>
+	</body>
+
+</html>

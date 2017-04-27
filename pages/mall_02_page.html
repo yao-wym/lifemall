@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/life_mall.js"></script>
+		<script src="../js/img_util.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*Begin 处理顶部导航条搜索bar布局混乱*/
+			body{
+				font-family: "microsoft yahei";
+			}
+			/*.mui-search:before {
+				top: 65%;
+			}
+			.mui-input-row.mui-search .mui-icon-clear {
+				top: 0px;
+				right: 5px;
+			}*/
+			/*End 处理导航条布局混乱*/
+			/*Begin tab的字体颜色*/
+			
+			.mui-segmented-control {
+				color: darkgray;
+			}
+			/*End tab的字体颜色*/
+			/*Begin 列表图片大小*/
+			
+			.mui-table-view .mui-media-object {
+				max-width: 100px;
+				max-height: 80px;
+				height: 90px;
+			}
+			.mui-search{
+				width: 60%;
+			}
+			#icon_container{
+				padding-top: 0px !important;
+				padding-bottom: 20px !important; 
+				margin-left: 72%;
+				width: 100px;
+				height: 50px;
+			}
+			#icon_container div{
+				margin-top: 12px;
+				margin-left: 40px;
+				color: #019ffe;
+			}
+			.mui-control-content{
+				margin-top: 60px;
+			}
+			.add_more_tab{
+				width: 100%; 
+				text-align: center; 
+				padding-top: 10px; 
+				height: 40px;
+			}
+			/*End 列表图片大小*/
+		</style>
+	</head>
+
+	<body>
+		<!--Begin 搜索+返回,顶部导航-->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div  class="mui-input-row mui-search" style="margin-top:-42px;margin-left: 44px;float: left;">
+				<input id="search" type="search" class=" mui-input-clear" placeholder="请输入您想搜索的商品" />
+			</div>
+			<div id="icon_container" style="">
+				<div id="change_div" style="position: absolute; margin-bottom: 20px;">建材区</div>
+				<img style="margin:10px 5px 0px 10px;display:inline-block;width:30px;" src="../img/jiancai_blue.png" />
+			</div>
+			
+		</header>
+		<!--End 搜索+返回,顶部导航-->
+		<!--Begin tab列表项-->
+		<header class="mui-bar mui-bar-nav" style="top:44px;">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#item1mobile">客厅</a>
+				<a class="mui-control-item" href="#item2mobile">卧室</a>
+				<a class="mui-control-item" href="#item3mobile">餐厅</a>
+				<a class="mui-control-item" href="#item4mobile">书房</a>
+				<a class="mui-control-item" href="#item5mobile">儿童房</a>
+				<a class="mui-control-item" href="#item6mobile">家饰</a>
+			</div>
+			<div style="display: none;" id="segmentedControl_2" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#item1mobile2">墙地面</a>
+				<a class="mui-control-item" href="#item2mobile2">厨房</a>
+				<a class="mui-control-item" href="#item3mobile2">灯饰</a>
+				<a class="mui-control-item" href="#item4mobile2">卫浴</a>
+				<a class="mui-control-item" href="#item5mobile2">五金</a>
+				<a class="mui-control-item" href="#item6mobile2">其他</a>
+			</div> 
+		</header>
+		<!--End tab列表项-->
+		<div id="goods_list" class="mui-content">
+			<div class="mui-content-padded" style="margin: 20px 0 0 0;">
+				<div  id="item1mobile" class="mui-control-content mui-active">
+					<ul id="keting_list_container"  class="mui-table-view mui-grid-view">
+						<li style="display: none;" id="item_temp" class="mui-table-view-cell mui-col-xs-6">
+							<a id="goods_id_temp" href="#">
+								<img class="mui-media-object" src="" style="margin-top:-10px;height:120px;max-height: 100%;">
+								<span class="mui-ellipsis-2" style="font-size: 14px;"></span>
+								<div style="color: #ff0000;font-weight: bolder;"></div>
+							</a>
+						</li>
+					</ul>
+					<div class="add_more_tab" id="add_more_keting">点击加载更多</div>
+				</div>
+				<div id="item2mobile" class="mui-control-content">
+					<ul id="woshi_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_woshi">点击加载更多</div>
+			
+				</div>
+				<div id="item3mobile" class="mui-control-content">
+					<ul id="canting_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_canting">点击加载更多</div>
+				</div>
+				<div id="item4mobile" class="mui-control-content">
+					<ul id="shufang_list_container" class="mui-table-view mui-grid-view">
+   
+					</ul>
+					<div class="add_more_tab" id="add_more_shufang">点击加载更多</div>
+				</div>
+				<div id="item5mobile" class="mui-control-content">
+					<ul id="ertong_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_ertong">点击加载更多</div>
+				</div>
+				<div id="item6mobile" class="mui-control-content">
+					<ul id="jiashi_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_jiashi">点击加载更多</div>
+			
+				</div>
+			</div>
+		</div>
+		<div  style="display: none;" id="goods_list_2" class="mui-content">
+			<div class="mui-content-padded" style="margin: 20px 0 0 0;">
+				<div style="" id="item1mobile2" class="mui-control-content mui-active">
+					<ul id="qiangdimian_list_container"  class="mui-table-view mui-grid-view">
+						
+					</ul>
+					<div class="add_more_tab" id="add_more_qiangdimian">点击加载更多</div>
+			
+				</div>
+				<div id="item2mobile2" class="mui-control-content">
+					<ul id="chufang_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_chufang">点击加载更多</div>
+			
+				</div>
+				<div id="item3mobile2" class="mui-control-content">
+					<ul id="dengshi_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_dengshi">点击加载更多</div>
+			
+				</div>
+				<div id="item4mobile2" class="mui-control-content">
+					<ul id="weiyu_list_container" class="mui-table-view mui-grid-view">
+ 
+					</ul>
+					<div class="add_more_tab" id="add_more_weiyu" >点击加载更多</div>
+			
+				</div>
+				<div id="item5mobile2" class="mui-control-content">
+					<ul id="wujin_list_container" class="mui-table-view mui-grid-view">
+
+					</ul>
+					<div class="add_more_tab" id="add_more_wujin">点击加载更多</div>
+			
+				</div>
+				<div id="item6mobile2" class="mui-control-content">
+					<ul id="qita_list_container" class="mui-table-view mui-grid-view">
+					
+					</ul>
+					<div class="add_more_tab" id="add_more_qita">点击加载更多</div>
+			
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			var is_first = true;
+			var is_jiancai_first = true
+			var cur_page = new Array();
+			var page = 6;
+			var last_tap = 0;
+			var type_arr = ["keting","woshi","canting","shufang","ertong","jiashi","qiangdimian","chufang","dengshi","weiyu","wujin","jiashi"];
+			var type_id_arr = [1173,1172,1174,1175,1177,1179,1116,1113,1112,1114,1115,1251]
+			for(var i=0;i<type_arr.length;i++){
+				var element_id = "add_more_"+type_arr[i];
+				var add_more_btn = document.getElementById(element_id);
+				add_more_btn.addEventListener("tap",add_more(type_arr[i]+"_list_container", type_id_arr[i], 1))
+			}
+			
+			
+			
+			cur_page['keting_list_container'] = 1;
+			cur_page['woshi_list_container'] = 1;
+			cur_page['canting_list_container'] = 1;
+			cur_page['shufang_list_container'] = 1;
+			cur_page['ertong_list_container'] = 1;
+			cur_page['jiashi_list_container'] = 1;
+			cur_page['qiangdimian_list_container'] = 1;
+			cur_page['chufang_list_container'] = 1;
+			cur_page['dengshi_list_container'] = 1;
+			cur_page['weiyu_list_container'] = 1;
+			cur_page['wujin_list_container'] = 1;
+			cur_page['qita_list_container'] = 1;
+			var change_div = document.getElementById("change_div");
+			
+			change_div.addEventListener("tap",change_tab);
+			var goods_detail_page = null;
+			function change_tab(src){
+				var segmentedControl_1 = document.getElementById("segmentedControl");
+				var segmentedControl_2 = document.getElementById("segmentedControl_2");
+				var goods_list_1 = document.getElementById("goods_list");
+				var goods_list_2 = document.getElementById("goods_list_2");
+				if("建材区" == src.srcElement.innerText){
+					load_jiancai();
+					src.srcElement.innerText = "家具区"
+					goods_list_1.setAttribute("style","display: none;")
+					goods_list_2.removeAttribute("style")
+					segmentedControl_1.setAttribute("style","display: none;")
+					segmentedControl_2.removeAttribute("style")
+				}else{
+					src.srcElement.innerText = "建材区"
+					goods_list_2.setAttribute("style","display: none;")
+					goods_list_1.removeAttribute("style")
+					segmentedControl_2.setAttribute("style","display: none;")
+					segmentedControl_1.removeAttribute("style")
+				}
+			}
+			mui.init();
+			 mui.plusReady(function() {
+			    goods_detail_page = plus.webview.getWebviewById("goods_detail.html");
+			    init_search();
+			     mui('.mui-segmented-control').on('click', 'a', function(e) {
+				 	//console.log("mall_02 mui-segmented-control:debug");
+                    e.preventDefault();
+                });
+			});
+			function add_more(container_id,type_id,arear_id){
+				return function(){
+					loadmore(container_id, type_id, arear_id)
+				}
+			} 
+			function init_search() {
+				var search_input = document.getElementById("search");
+				
+				search_input.addEventListener('keyup', function(e) {
+					if (e.keyCode == 13) {
+						var value_uri = encodeURI(search_input.value)
+						var goods_list_page = plus.webview.getWebviewById("goods_list.html");
+						//console.log("show_goods_list");
+						mui.fire(goods_list_page, 'set_list_data', {
+							'type': 'keyword',
+							'value': value_uri
+						});
+						goods_list_page.show("slide-in-right", 300);
+					}
+				});
+				//console.log("init_search is ok");
+			};
+			function loadmore(container_id, gc_id, area_id) {
+				 plus.nativeUI.showWaiting("努力加载中...");
+				 //console.log(HOST_DIR + "index.php?act=goods&op=goods_list&gc_id=" + gc_id + "&area_id=" + area_id + "&type=json"+ "&page=" + page + "&curpage=" + cur_page[container_id])
+				mui.ajax(
+					HOST_DIR + "index.php?act=goods&op=goods_list&gc_id=" + gc_id + "&area_id=" + area_id + "&type=json"+ "&page=" + page + "&curpage=" + cur_page[container_id], {
+						dataType: 'json', //服务器返回json格式数据
+						//				data:{"key":localStorage.getItem("key")},
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							var goods_list = data.datas.goods_list;
+							//					alert(JSON.stringify(data.datas.favorites_list[1]));
+							var list_container = document.getElementById(container_id);
+							
+							//					var goods_list = data.datas.goods_list; 
+							var item = document.getElementById("item_temp").cloneNode(true);
+							//					var list_container = document.getElementById("container_id");
+							item.setAttribute("style","height:190px");
+							for (var i = 0; i < goods_list.length; i++) {
+								var node = item.cloneNode(true);
+								node.firstElementChild.children[1].innerText = goods_list[i].goods_name;
+								node.firstElementChild.children[2].innerText = goods_list[i].goods_price;
+								//						node.firstElementChild.children[1].children[1].innerText = collect_list[i].evaluation_good_star;
+								img_src_arr = goods_list[i].goods_image_url.split("_360");
+								img_src = img_src_arr[0] + img_src_arr[1];
+								getImageSrc(node.firstElementChild.children[0] , img_src);
+								list_container.appendChild(node);
+								node.addEventListener('tap', grid_item_tap(goods_list[i].goods_id));
+							}
+							cur_page[container_id]++;
+							if (data.hasmore == false) {
+								var addmorebtn = list_container.nextElementSibling.cloneNode(true);
+								list_container.parentElement.removeChild( list_container.nextElementSibling);
+								addmorebtn.innerText = "没有更多了";
+								list_container.parentElement.appendChild(addmorebtn);
+//								list_container.nextElementSibling.removeEventListener("tap",add_more(),false);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+						}
+					});
+			};
+
+			function grid_item_tap(goods_id) {
+				return function() {
+					if (last_tap != 0 && new Date().getTime() - last_tap < 1000) {
+						last_tap = new Date().getTime();
+						return;
+					} 
+					last_tap = new Date().getTime();
+//					var mall01 = plus.webview.getWebviewById("mall_01_page.html");
+					//console.log("grid_tap goods_detail...................");
+					mui.fire(goods_detail_page, 'from_list_data', {
+						'goods_id': goods_id
+					});
+//					alert(123)
+					goods_detail_page.show("slide-in-right", 300);
+//					mall01.hide();
+				};
+			};
+			
+			 //			document.getElementById('goods_id_1')mall_01_init.addEventListener('tap', function() {
+			 //				mui.openWindow({
+			 //					url: 'goods_detail.html',
+			 //					id: 'goods_detail'
+			 //				});
+			 //			});
+			 
+			 window.addEventListener("mall_02_init", function(e) {
+			 	if(is_first == true){
+			 		//console.log("mall_02_init");
+			 		loadmore("keting_list_container", 1173, 1)
+					loadmore("woshi_list_container", 1172, 1)
+					loadmore("canting_list_container", 1174, 1)
+					loadmore("shufang_list_container", 1175, 1)
+					loadmore("ertong_list_container", 1177, 1)
+					loadmore("jiashi_list_container", 1179, 1)
+					is_first = false;
+			 	}else{
+			 		//console.log("mall_02_page is loaded");
+			    	
+			 	}
+			});
+			function load_jiancai(){
+				if(is_jiancai_first == true){
+					loadmore("qiangdimian_list_container", 1116, 1)
+					loadmore("chufang_list_container", 1113, 1)
+					loadmore("dengshi_list_container", 1112, 1)
+					loadmore("weiyu_list_container", 1114, 1)
+					loadmore("wujin_list_container", 1115, 1)
+					loadmore("qita_list_container", 1251, 1)
+					is_jiancai_first = false;
+				}else{
+					//console.log("mall_02_page_jiancai is loaded");
+				}
+				
+				
+			}
+		</script>
+	</body>
+
+</html>

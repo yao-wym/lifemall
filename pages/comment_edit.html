@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/life_mall.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			/*页面单独css代码*/
+			
+			body {
+				background-color: #e8e8e8;
+			}	
+			::-webkit-input-placeholder {
+				color: dimgrey;
+			}
+			::-moz-placeholder {
+				color: dimgrey;
+			}
+			:-ms-input-placeholder {
+				color: dimgrey;
+			}
+			input:-moz-placeholder {
+				color: dimgrey;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">咨询评价</h1>
+			<button style="margin-top:2px;padding-top:3px;padding-bottom: 3px;" class="mui-pull-right mui-btn mui-btn-primary" id="comment_submit" onclick="return false;">发表</button>
+		</header>
+		<div style="padding-top: 46px;"></div>
+		<div class="mui-input-row" style="border: none;">
+			<textarea id="comment_text" style="border: none;background-color: #e8e8e8;" rows="3" placeholder="咨询评价内容不得少于10个字"></textarea>
+		</div>
+		<p style="padding-left: 15px;padding-right: 15px;">
+			写下你想咨询的问题或者购买体会,可以为其它小伙伴提供参考.
+		</p>
+		<script type="text/javascript" charset="utf-8">
+			 /*----------------  	Part 1   	变量声明  		----------------TODO */
+			var goods_id = null;
+			var comment_submit = document.getElementById("comment_submit");
+			var comment_text = document.getElementById("comment_text");
+			/*----------------  	Part 2 		miu.init  		----------------TODO */
+			mui.init();
+			/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+			/*----------------  	Part 4 		页面设置			----------------TODO */
+			/*----------------  	Part 5 		事件处理			----------------TODO */
+			window.addEventListener("init_edit_comment",function(e){
+				goods_id = e.detail.goods_id;
+			})
+			comment_submit.addEventListener("tap",function(){
+				if(goods_id == null){
+					mui.toast("信息错误");
+					mui.back();
+					return;
+				}
+				comment_content = comment_text.value;
+				//console.log(comment_content);
+				if(comment_content == null || comment_content.length<5){
+					mui.toast("评价内容不得少于10字");
+					return;
+				}
+				if(localStorage.getItem("user_id") == null){
+					post_data={
+							'user_id':'1',
+							'user_name':'游客',
+							'goods_id':goods_id,
+							'comment':comment_content,
+						};
+				}else{
+					post_data={
+						'user_id':localStorage.getItem("user_id"),
+						'goods_id':goods_id,
+						'user_name':localStorage.getItem("username"),
+						'comment':comment_content,
+					};
+				}
+				plus.nativeUI.showWaiting();
+				mui.ajax(
+					HOST_DIR + '/index.php?act=rock_goods_comment&op=addComment', {
+						dataType: 'json', 
+						type: 'post', //HTTP请求类型
+						data:post_data,
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							//console.log(JSON.stringify(data));
+							plus.nativeUI.closeWaiting();
+							if(data.code != 200){
+								mui.toast("评价失败");
+							}else if(data.datas == "参数不完整"){
+								mui.toast("评价失败");
+							}else{
+								mui.toast("评价成功");
+								var goods_detail = plus.webview.getWebviewById("goods_detail.html")
+								mui.fire(goods_detail,"reload_comment",{"goods_id":goods_id});
+								mui.back();
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast("网络错误");
+						}
+					});
+			})
+			/*----------------  	Part 6 		平台相关			----------------TODO */
+		</script>
+	</body>
+
+</html>
